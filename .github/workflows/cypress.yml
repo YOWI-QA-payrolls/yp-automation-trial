@@ -23,12 +23,14 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          npm install --no-save mocha-junit-reporter @testiny/cli@latest
+          npm install mocha-junit-reporter @testiny/cli@latest
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
+          install: false
+          command: npx cypress run --browser chrome --reporter mocha-junit-reporter --reporter-options mochaFile=results/results-[hash].xml
 
       - name: Verify test results
         if: ${{ !cancelled() }}
