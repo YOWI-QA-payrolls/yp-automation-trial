@@ -18,7 +18,7 @@ describe('login', () => {
     });
   
     describe('Daily log', () => {
-        it.skip('should edit and delete', () => {
+        it('should edit and delete', function() { this.skip();
             //edit
           cy.get('#timesheets').click();
           cy.get('#daily_logs > a').click();

@@ -16,7 +16,7 @@ describe('login', () => {
     });
   
     describe('navigate to complete special reports', () => {
-        it.skip('go to loan register', () => {
+        it('go to loan register', function() { this.skip();
             cy.get('#dmpi_reports_list > [href="#"]').click();
             cy.wait(2000);
             cy.get('#leave_accruals > a').click({ force: true });

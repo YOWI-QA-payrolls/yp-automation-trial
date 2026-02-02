@@ -19,7 +19,7 @@ describe('login', () => {
     });
   
     describe('Daily log', () => {
-        it.skip('should calendar search', () => {
+        it('should calendar search', function() { this.skip();
         cy.get('#timesheets').click();
         cy.get('#daily_logs > a').click();
         cy.wait(2000);

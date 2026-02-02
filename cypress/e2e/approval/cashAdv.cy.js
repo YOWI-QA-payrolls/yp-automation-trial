@@ -17,7 +17,7 @@ describe('login', () => {
     });
   
     describe('navigate to overtime timesheet', () => {
-        it.skip('should search calendar', () => {
+        it('should search calendar', function() { this.skip();
              cy.get('#approval_list > [href="#"]').click();
              cy.get('#cash_advance_approval > a').click();
 

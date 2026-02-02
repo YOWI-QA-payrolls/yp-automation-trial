@@ -14,7 +14,7 @@ describe('login', () => {
     });
  
     describe('settings', () => {
-        it.skip('10 mins late', () => {
+        it('10 mins late', function() { this.skip();
 
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });

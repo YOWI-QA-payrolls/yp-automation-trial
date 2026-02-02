@@ -16,7 +16,7 @@ describe('login', () => {
     });
   
     describe('navigate to complete timesheet', () => {
-        it.skip('should search calendar', () => {
+        it('should search calendar', function() { this.skip();
             cy.get('#employee_list > a').click(); 
             cy.get('#tax_beginning_balance > a').click();
             // cy.get('#employee_statutory > a').click({ force: true });

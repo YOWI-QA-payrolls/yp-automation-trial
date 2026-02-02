@@ -16,7 +16,7 @@ describe('login', () => {
     });
   
     describe('navigate to employee', () => {
-        it.skip('should go to dashboard', () => {
+        it('should go to dashboard', function() { this.skip();
             cy.get('#reports_list > [href="#"]').click();
             cy.get('#bir > [href=""]').click();
             cy.get('#tax_report > a').click({force: true}); // <--- Use 'force: true' option
