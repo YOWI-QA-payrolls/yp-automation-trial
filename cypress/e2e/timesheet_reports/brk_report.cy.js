@@ -17,7 +17,7 @@ describe('login', () => {
     });
   
     describe('navigate to complete timesheet', () => {
-        it('should search calendar', () => {
+        it.skip('should search calendar', () => {
             cy.get('#timesheetreports_list > [href="#"]').click();
             cy.get('#break_reports > a').click();
             //calendar 

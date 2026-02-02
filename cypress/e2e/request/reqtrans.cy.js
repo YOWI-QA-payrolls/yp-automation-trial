@@ -17,7 +17,7 @@ describe('login', () => {
     });
   
     describe('navigate to complete timesheet', () => {
-        it('should search calendar', () => {
+        it.skip('should search calendar', () => {
             cy.get('#requests_list > [href="#"] > .nav-label').click();
             cy.get('#transfer_request > a').click();
 

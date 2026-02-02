@@ -1,49 +1,74 @@
 name: Cypress Tests
+
 on:
   push:
-    branches: [main, master]
+    branches: [ main, master ]
   pull_request:
-    branches: [main, master]
+    branches: [ main, master ]
+  workflow_dispatch:
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+          cache: 'npm'
+
+      - name: Cache Cypress binary
+        uses: actions/cache@v4
+        id: cypress-cache
+        with:
+          path: |
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Install Cypress binary
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
+        run: npx cypress install
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
+          install: false
           config: reporter=junit,reporterOptions.mochaFile=results/results-[hash].xml
 
-      - name: Install Testiny CLI
+      - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
-        run: npm install --no-save @testiny/cli@latest
+        with:
+          name: cypress-results
+          path: results/
+          retention-days: 30
 
-      - name: Upload results to Testiny
-        if: ${{ !cancelled() }}
+      # ---------- Upload to Testiny ----------
+      - name: Upload Cypress results to Testiny
+        if: ${{ always() }}
         env:
           TESTINY_API_KEY: ${{ secrets.TESTINY_API_KEY }}
-        run: npx @testiny/cli automation --project ${{ vars.TESTINY_PROJECT_ID || '1' }} --source cypress-e2e --junit results/*.xml
+          TESTINY_PROJECT_ID: ${{ secrets.TESTINY_PROJECT_ID }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_BRANCH: ${{ github.ref_name }}
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          echo "Uploading Cypress results to Testiny..."
 
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots/
-          retention-days: 30
-
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: cypress-videos
-          path: cypress/videos/
-          retention-days: 30
+          npx @testiny/cli automation \
+            --project "$TESTINY_PROJECT_ID" \
+            --source "cypress-e2e" \
+            --field-values run_id=$GITHUB_RUN_ID,sha=$GITHUB_SHA,branch=$GITHUB_BRANCH \
+            --run-fields run_id,sha,branch \
+            --junit results/*.xml \
+            || echo "Warning: Testiny upload failed, continuing pipeline."
