@@ -1,0 +1,74 @@
+describe('login', () => {
+    // This code will run before each test case in this describe block
+    beforeEach(() => {
+        // Load login credentials from the fixture file
+        cy.viewport(1280, 900);
+        cy.fixture('credentials').then(credentials => {
+            const { url, email, pass } = credentials;
+  
+            // Login
+            cy.visit(url);
+            cy.get(':nth-child(1) > .form-control').type(email);
+            cy.get(':nth-child(2) > .form-control').type(pass);
+            cy.get('.custom-mb').click();
+            
+        });
+    });
+  
+    describe('navigate to complete timesheet', () => {
+        it('should search calendar', () => {
+            cy.get('#employee_list > a').click(); 
+            cy.get('#employee_income_deduction > ul.nav.nav-third-level.collapse')
+            .invoke('removeAttr', 'style') // Remove 'style' attribute to make it visible
+            .get('#employee_income_deduction > a')
+            .contains('Earnings & Deductions')
+            .click();
+            cy.wait(5000);
+            cy.get('#employee_statutory > a').click({ force: true });
+
+            // //calendar 
+            // cy.get('.input-group > :nth-child(1) > .btn').click();
+            // cy.get('thead > :nth-child(1) > :nth-child(1) > .btn').click();
+            // cy.get('.uib-datepicker-popup').contains('11').click();
+            // cy.get('tabletoolsdaterange2 > .input-group > .form-control.ng-pristine').clear().type('01/30/2024');
+            // cy.get('.hand_cursor').click();
+
+                        
+            // // searchbar
+            cy.get('.select2-search-field > .select2-input').click();
+            cy.get('.select2-highlighted > .select2-result-label > .ng-binding').click();
+            cy.get('.form-group > .btn').click();
+            cy.get('tabletoolstrans > .input-group > .form-control').type('caleb');
+            // // cy.get('[ng-if="!main.no_search_button"]').click();
+
+            // cy.wait(2000);
+
+            // // adv filter    
+            cy.get('[ng-if="!main.no_filter && main.current_module != \'daily_logs\' && ![\'sss_contribution\',\'hdmf_contribution\',\'phic_contribution\', \'remittances_loan\'].includes(main.current_module)"]')
+            .click();
+            cy.wait(2000);
+            cy.get('.col-sm-12 > .btn-success').click();
+            // cy.wait(3000);
+
+            // create
+            cy.get('.align_left > .ng-binding').click();
+            cy.get('.col-sm-1 > .btn').click();
+            cy.get('.align_left > .col-sm-3 > .ui-select-container > .select2-choice > .select2-chosen.ng-binding').click();
+            cy.get('.select2-highlighted > .select2-result-label > .ng-binding').click();
+            cy.get('#contribution_amount_select').type('1000');
+            cy.get('.col-sm-4 > .form-control').type('testing');
+            // cy.get('[ng-show="contribution_list.contribution.name != 'SPP' && contribution_list.contribution.name !== 'Group Insurance'"] > .fa').click();
+            cy.get('.panel > .panel-footer > .pull-right > .btn').click();
+
+
+
+
+
+
+
+        });
+    });
+  
+    // You can add more test cases here for other scenarios
+  });
+  
