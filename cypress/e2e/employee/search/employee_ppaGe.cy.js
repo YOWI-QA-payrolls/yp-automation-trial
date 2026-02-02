@@ -9,9 +9,9 @@ describe('login', () => {
   
             // Login
             cy.visit(url);
-            cy.get(':nth-child(1) > .form-control').type(email);
-            cy.get(':nth-child(2) > .form-control').type(pass);
-            cy.get('.custom-mb').click();
+            cy.get('#email').type(email);
+            cy.get('#password').type(pass);
+            cy.get('#signin-button').click();
             
         });
     });

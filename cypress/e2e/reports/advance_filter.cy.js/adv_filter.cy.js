@@ -8,12 +8,12 @@ describe('login', () => {
             const { url, email, pass } = credentials;
   
             // Login
-        cy.viewport(1280, 800);
+        cy.viewport(1280, 900);
 
             cy.visit(url);
-            cy.get(':nth-child(1) > .form-control').type(email);
-            cy.get(':nth-child(2) > .form-control').type(pass);
-            cy.get('.custom-mb').click();
+            cy.get('#email').type(email);
+            cy.get('#password').type(pass);
+            cy.get('#signin-button').click();
             
         });
     });
