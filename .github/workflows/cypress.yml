@@ -22,6 +22,17 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
+          config: reporter=junit,reporterOptions.mochaFile=results/results-[hash].xml
+
+      - name: Install Testiny CLI
+        if: ${{ !cancelled() }}
+        run: npm install --no-save @testiny/cli@latest
+
+      - name: Upload results to Testiny
+        if: ${{ !cancelled() }}
+        env:
+          TESTINY_API_KEY: ${{ secrets.TESTINY_API_KEY }}
+        run: npx @testiny/cli automation --project ${{ vars.TESTINY_PROJECT_ID || '1' }} --source cypress-e2e --junit results/*.xml
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
