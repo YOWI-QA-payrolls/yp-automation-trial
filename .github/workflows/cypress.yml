@@ -29,7 +29,12 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
-          config: reporter=mocha-junit-reporter,reporterOptions.mochaFile=results/results-[hash].xml
+
+      - name: Verify test results
+        if: ${{ !cancelled() }}
+        run: |
+          echo "Checking for JUnit XML results..."
+          ls -la results/ 2>/dev/null || echo "Warning: results/ directory not found"
 
       - name: Upload results to Testiny
         if: ${{ !cancelled() }}
