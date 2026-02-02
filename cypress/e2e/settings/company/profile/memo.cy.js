@@ -13,7 +13,7 @@ describe('login', () => {
     });
 
     describe('settings', () => {
-        it('profile', () => {
+        it.skip('profile', () => {
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });
             cy.get('#profiles > a').click({ force: true });

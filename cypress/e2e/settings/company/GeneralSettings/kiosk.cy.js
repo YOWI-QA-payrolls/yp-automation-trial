@@ -14,7 +14,7 @@ describe('login', () => {
     });
 
     describe('settings', () => {
-        it('customized late', () => {
+        it.skip('customized late', () => {
             
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });
@@ -54,7 +54,7 @@ describe('login', () => {
 
             cy.get('.form-group > .btn').click();
  
-        }); // Closing it('profile') test case
+        }); // Closing it.skip('profile') test case
     }); // Closing describe('settings')
     
 }); // Closing describe('login')

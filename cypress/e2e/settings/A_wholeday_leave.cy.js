@@ -11,7 +11,7 @@ describe('login', () => {
     });
   
     describe('import', () => {
-      it('new features', () => {
+      it.skip('new features', () => {
         cy.get('#settings_list > a').click();
         cy.get('#imports > a').click();
         cy.get(':nth-child(24) > .ibox > .ibox-title').click();

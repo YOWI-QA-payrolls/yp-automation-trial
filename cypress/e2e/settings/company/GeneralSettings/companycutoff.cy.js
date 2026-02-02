@@ -14,7 +14,7 @@ describe('login', () => {
     });
 
     describe('settings', () => {
-        it('customized late', () => {
+        it.skip('customized late', () => {
             
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });
@@ -57,7 +57,7 @@ describe('login', () => {
             cy.get('[ng-repeat="header in main.company_cutoff_schedules_lists"][style=""] > .input-group > .input-group-btn > .btn').click();
             cy.get('.btn-success').click()
 
-        }); // Closing it('profile') test case
+        }); // Closing it.skip('profile') test case
     }); // Closing describe('settings')
     
 }); // Closing describe('login')

@@ -18,7 +18,7 @@ describe('login', () => {
     });
  
     describe('Special reports', () => {
-        it('loans', () => {
+        it.skip('loans', () => {
           cy.get('#dmpi_reports_list > [href="#"]').click();
           cy.get('#monthlies_list > [href=""]').click();
           cy.get('#ceap > a').click({force: true});

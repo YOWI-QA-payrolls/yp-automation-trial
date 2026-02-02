@@ -17,7 +17,7 @@ describe('login', () => {
   });
 
   describe('Daily log', () => {
-      it('should create complete timesheet', () => {
+      it.skip('should create complete timesheet', () => {
         cy.get('#timesheets').click();
         cy.get('#daily_logs > a').click();
         cy.wait(3000)

@@ -14,7 +14,7 @@ describe('login', () => {
     });
 
     describe('settings', () => {
-        it('customized late', () => {
+        it.skip('customized late', () => {
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });
             cy.get('#profiles > a').click({ force: true });

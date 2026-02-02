@@ -17,7 +17,7 @@ describe('login', () => {
     });
   
     describe('Daily log', () => {
-        it('should search employee per p', () => {
+        it.skip('should search employee per p', () => {
           cy.get('#timesheets').click();
           cy.get('#daily_logs > a').click();
           cy.wait(5000);

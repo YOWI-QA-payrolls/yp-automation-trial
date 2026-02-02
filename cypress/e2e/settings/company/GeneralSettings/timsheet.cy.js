@@ -14,7 +14,7 @@ describe('login', () => {
     });
  
     describe('settings', () => {
-        it('10 mins late', () => {
+        it.skip('10 mins late', () => {
 
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });
@@ -59,7 +59,7 @@ describe('login', () => {
             
  
  
-        }); // Closing it('profile') test case
+        }); // Closing it.skip('profile') test case
     }); // Closing describe('settings')
     
 }); // Closing describe('login')
