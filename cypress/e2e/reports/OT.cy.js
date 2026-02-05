@@ -16,7 +16,7 @@ describe('login', () => {
     });
   
     describe('navigate to employee', () => {
-        it('should go to dashboard', function() { this.skip();
+        it('should go to dashboard', () => {
             cy.get('#reports_list > [href="#"]').click();
             cy.get('#ot_summary > a').click();
             cy.wait(2000);
@@ -24,7 +24,7 @@ describe('login', () => {
             // generate
             cy.get('tabletoolstrans > .input-group > .form-control').type('Juan');
             // cy.get(':nth-child(4) > :nth-child(3) > .btn-group > a > .btn').click();
-            cy.get('[ng-if="!main.no_search_button"]').click();
+            cy.get('#advance-search').click();
             cy.get('tbody > [style=""] > :nth-child(3)').click();
             cy.wait(2000);
             cy.get('#select_payroll_period').click();

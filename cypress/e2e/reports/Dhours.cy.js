@@ -16,11 +16,11 @@ describe('login', () => {
     });
   
     describe('navigate to employee', () => {
-        it('should go to dashboard', function() { this.skip();
+        it('should go to dashboard', () => {
             cy.get('#reports_list > [href="#"]').click();
             cy.get('#daily_hours_worked > a').click();
             cy.wait(2000);
-            cy.get('.input-group > :nth-child(1) > .btn').click();
+            cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
             cy.get('.btn-group > .btn-info').click();
             cy.wait(2000);
             cy.get('.input-group > .hand_cursor').click();

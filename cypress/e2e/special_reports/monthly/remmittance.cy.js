@@ -20,7 +20,7 @@ describe('login', () => {
   
   
     describe('Special reports', () => {
-        it('loans', function() { this.skip();
+        it('loans', () => {
           cy.get('#dmpi_reports_list > [href="#"]').click();
           cy.get('#monthlies_list > [href=""]').click();
           cy.get('#remittances_loan > a').click({force: true});

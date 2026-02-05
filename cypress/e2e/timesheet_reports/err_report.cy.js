@@ -17,12 +17,12 @@ describe('login', () => {
     });
   
     describe('navigate to erroneous timesheet', () => {
-        it('should search calendar', function() { this.skip();
+        it('should search calendar', () => {
             cy.get('#timesheetreports_list > [href="#"]').click();
             cy.get('#erroneous_timesheet > a').click();
             //calendar 
-            cy.get('.input-group > :nth-child(1) > .btn').click();
-            cy.get('thead > :nth-child(1) > :nth-child(1) > .btn').click();
+            cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
+            cy.get('.uib-datepicker-popup .uib-left').click();
             cy.get('.uib-datepicker-popup').contains('29').click();
             // cy.get('tabletoolsdaterange2 > .input-group > .form-control.ng-pristine').clear().type('01/05/2023');
             cy.get('.hand_cursor').click();

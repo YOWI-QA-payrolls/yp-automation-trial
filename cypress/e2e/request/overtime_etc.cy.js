@@ -17,7 +17,7 @@ describe('login', () => {
     });
   
     describe('navigate to overtime timesheet', () => {
-        it('should search calendar', function() { this.skip();
+        it('should search calendar', () => {
             cy.get('#requests_list > a').click().click();
             cy.get('#undertime_overtime_request > a').click();
 
@@ -166,10 +166,10 @@ describe('login', () => {
 
                 cy.wait(2000);
 
-                cy.get('[ng-if="!main.no_filter && main.current_module != \'daily_logs\' && ![\'sss_contribution\',\'hdmf_contribution\',\'phic_contribution\', \'remittances_loan\'].includes(main.current_module)"]')
+                cy.get('#advance-filter-btn')
                 .click();
                 // cy.wait(2000);
-                cy.get('.btn-sm').click();
+                cy.get('#advance-search').click();
 
                 cy.get('.col-sm-3 > .pull-right > .btn').click();
                 cy.get('.select2-chosen.ng-binding').click();

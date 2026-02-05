@@ -17,48 +17,54 @@ describe('login', () => {
     });
   
     describe('navigate to overtime timesheet', () => {
-        it('should search calendar', function() { this.skip();
-             cy.get('#approval_list > [href="#"]').click();
+        it('should search calendar', () => {
+             cy.get('#approval_list > a').click();
              cy.get('#leave_approval > a').click();
 
              //calendar 
-             cy.get('.input-group > :nth-child(1) > .btn').click();
-             cy.get('thead > :nth-child(1) > :nth-child(1) > .btn').click();
+             cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
+             cy.get('.uib-datepicker-popup .uib-left').click();
              cy.get('.uib-datepicker-popup').contains('11').click();
-             cy.get('tabletoolsdaterange2 > .input-group > .form-control.ng-pristine').clear().type('01/30/2024');
+             cy.get('[ng-model="filters.date_to"]').clear().type('01/30/2024');
              // cy.get('.hand_cursor').click();
  
                          
              // searchbar
-             // cy.get('tabletoolstrans > .input-group > .form-control').type('eyt')
-             // cy.get('[ng-if="!main.no_search_button"]').click();
+             // cy.get('#search-input').type('eyt')
+             // cy.get('#advance-search').click();
  
              cy.wait(2000);
  
-             // adv filter    
-             cy.get('[ng-if="!main.no_filter && main.current_module != \'daily_logs\' && ![\'sss_contribution\',\'hdmf_contribution\',\'phic_contribution\', \'remittances_loan\'].includes(main.current_module)"]')
+             // adv filter
+             cy.get('#advance-filter-btn')
              .click();
              cy.wait(2000);
-             cy.get('.col-sm-12 > .btn-success').click();
+             cy.get('#advance-search').click();
 
             //  leave analysis
              cy.get('[ng-click="leave_analysis_dialog()"]').click();
+             cy.get('.toast-title', { timeout: 10000 }).should('not.exist');
              cy.get('.col-sm-8 > .pull-right > .btn').click();
  
              // auto approval
-            //  cy.get('.select2-choice').click();
-            //  cy.get(':nth-child(3) > .select2-result-label > .ng-binding').click();
-            //  cy.get('#auto_approval_1').click();
-            //  cy.get('[ng-click="submit_auto_approval(filters.auto_approval_option)"]').click(); 
+            //  cy.get('[ng-model="main.auto_approval"] .select2-choice').click();
+            //  cy.get('#ui-select-choices-0 li:nth-child(3)').click();
+            //  cy.get('#auto_approval').click();
+            //  cy.get('[ng-click="main.submit_auto_approval()"]').click();
             //  cy.get('.confirm').click();
    
  
-             // popup approve
-             cy.get('tbody > [style=""] > :nth-child(4)').click();
-             cy.get('span.ng-scope > :nth-child(1) > label').click();
-             cy.get('#leave_submit').click();
-             cy.wait(3000);
-             cy.get('.confirm').click();
+             // popup approve (conditional - only if data exists)
+             cy.get('body').then($body => {
+                 if ($body.find('tbody > [style=""] > :nth-child(4)').length > 0) {
+                     cy.get('tbody > [style=""] > :nth-child(4)').click();
+                     cy.get('span.ng-scope > :nth-child(1) > label').click();
+                     cy.get('#leave_submit').click();
+                     cy.wait(3000);
+                     cy.get('.toast-title', { timeout: 10000 }).should('not.exist');
+                     cy.get('.btn.btn-sm.btn-white.pull-right').click();
+                 }
+             });
 
         });
     });

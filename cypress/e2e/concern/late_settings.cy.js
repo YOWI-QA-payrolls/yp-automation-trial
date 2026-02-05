@@ -14,7 +14,7 @@ describe('login', () => {
     });
  
     describe('settings', () => {
-        it('10 mins late', function() { this.skip();
+        it('10 mins late', () => {
 
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });
@@ -37,7 +37,7 @@ describe('login', () => {
     }); // Closing describe('settings')
 
     describe('settings', () => {
-        it('customized late', function() { this.skip();
+        it('customized late', () => {
             
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });
@@ -64,7 +64,7 @@ describe('login', () => {
     }); // Closing describe('settings')
 
     describe('settings', () => {
-        it('customized late', function() { this.skip();
+        it('customized late', () => {
             
             cy.get('#settings_list > a').click();
             cy.get('#company_list > a').click({ force: true });

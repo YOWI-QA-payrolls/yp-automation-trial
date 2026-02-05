@@ -16,7 +16,7 @@ describe('login', () => {
     });
   
     describe('navigate to complete timesheet', () => {
-        it('should search calendar', function() { this.skip();
+        it('should search calendar', () => {
             cy.get('#employee_list > a').click(); 
             cy.get('#information_list > a').click();
             cy.get('#employeecostcenter > a').click();
@@ -36,10 +36,10 @@ describe('login', () => {
             cy.wait(2000);
 
             // adv filter    
-            cy.get('[ng-if="!main.no_filter && main.current_module != \'daily_logs\' && ![\'sss_contribution\',\'hdmf_contribution\',\'phic_contribution\', \'remittances_loan\'].includes(main.current_module)"]')
+            cy.get('#advance-filter-btn')
             .click();
             // cy.wait(2000);
-            cy.get('.col-sm-12 > .btn-success').click();
+            cy.get('#advance-search').click();
 
             cy.wait(3000);
 

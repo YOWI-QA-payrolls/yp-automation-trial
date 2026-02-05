@@ -17,36 +17,49 @@ describe('login', () => {
     });
   
     describe('navigate to overtime timesheet', () => {
-        it('should search calendar', function() { this.skip();
-             cy.get('#approval_list > [href="#"]').click();
+        it('should search calendar', () => {
+             cy.get('#approval_list > a').click();
+
+             // intercept API call for cash advance data
+             cy.intercept('POST', '**/cash_advance/read_pagination/**').as('loadData');
              cy.get('#cash_advance_approval > a').click();
 
-             //calendar 
-             cy.get('.input-group > :nth-child(1) > .btn').click();
-             cy.get('thead > :nth-child(1) > :nth-child(1) > .btn').click();
+             // wait for API call to complete
+             cy.wait('@loadData');
+
+             //calendar
+             cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
+             cy.get('.uib-datepicker-popup .uib-left').click();
              cy.get('.uib-datepicker-popup').contains('11').click();
-             cy.get('tabletoolsdaterange3 > .input-group > .form-control.ng-pristine').clear().type('01/30/2024');
+             cy.get('[ng-model="main.filters.date_to"]').clear().type('01/30/2024');
              // cy.get('.hand_cursor').click();
  
                          
              // searchbar
-             // cy.get('tabletoolstrans > .input-group > .form-control').type('eyt')
-             // cy.get('[ng-if="!main.no_search_button"]').click();
+             // cy.get('#search-input').type('eyt')
+             // cy.get('#advance-search').click();
  
              cy.wait(2000);
  
-             // adv filter    
-             cy.get('[ng-if="!main.no_filter && main.current_module != \'daily_logs\' && ![\'sss_contribution\',\'hdmf_contribution\',\'phic_contribution\', \'remittances_loan\'].includes(main.current_module)"]')
+             // adv filter
+             cy.get('#advance-filter-btn')
              .click();
              cy.wait(2000);
-             cy.get('.col-sm-12 > .btn-success').click();
+             cy.get('#advance-search').click();
  
-            //  auto approval
-            cy.get('#page-wrapper div.ng-scope div.col-sm-2 a span.select2-chosen.ng-binding').click();
-             cy.get(':nth-child(3) > .select2-result-label > .ng-binding').click();
-             cy.get('#auto_approval_1').click();
-             cy.get('div[ng-if="main.page_type == \'approval\'"] > .btn').click();
-             cy.get('.confirm').click();
+            //  auto approval - only if options exist
+            cy.get('[ng-model="main.auto_approval"] .select2-choice').click();
+             cy.get('body').then($body => {
+                 if ($body.find('#ui-select-choices-0 li').length > 0) {
+                     cy.get('#ui-select-choices-0 li:nth-child(3)').click();
+                     cy.get('#auto_approval').click();
+                     cy.get('[ng-click="main.submit_auto_approval()"]').click();
+                     cy.get('.confirm').click();
+                 } else {
+                     // close dropdown if no options
+                     cy.get('[ng-model="main.auto_approval"] .select2-choice').click();
+                 }
+             });
    
  
             //  // popup approve

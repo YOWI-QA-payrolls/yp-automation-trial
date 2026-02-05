@@ -17,13 +17,13 @@ describe('login', () => {
     });
   
     describe('navigate to complete timesheet', () => {
-        it('should search calendar', function() { this.skip();
+        it('should search calendar', () => {
             cy.get('#requests_list > [href="#"] > .nav-label').click();
             cy.get('#leave_request > a').click();
 
             //calendar 
-            cy.get('.input-group > :nth-child(1) > .btn').click();
-            cy.get('thead > :nth-child(1) > :nth-child(1) > .btn').click();
+            cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
+            cy.get('.uib-datepicker-popup .uib-left').click();
             cy.get('.uib-datepicker-popup').contains('10').click();
             cy.get('tabletoolsdaterange2 > .input-group > .form-control.ng-pristine').clear().type('12/21/2024');
             // cy.get('.hand_cursor').click();
@@ -36,10 +36,10 @@ describe('login', () => {
             cy.wait(2000);
 
             // adv filter    
-            cy.get('[ng-if="!main.no_filter && main.current_module != \'daily_logs\' && ![\'sss_contribution\',\'hdmf_contribution\',\'phic_contribution\', \'remittances_loan\'].includes(main.current_module)"]')
+            cy.get('#advance-filter-btn')
             .click();
             // cy.wait(2000);
-            cy.get('.col-sm-12 > .btn-success').click();
+            cy.get('#advance-search').click();
 
             // create
             cy.get('.form-group > .btn-group > .btn').click();

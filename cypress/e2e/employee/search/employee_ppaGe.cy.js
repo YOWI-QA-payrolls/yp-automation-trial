@@ -17,11 +17,11 @@ describe('login', () => {
     });
   
     describe('Daily log', () => {
-        it('should search employee per p', function() { this.skip();
+        it('should search employee per p', () => {
           cy.get('#timesheets').click();
           cy.get('#daily_logs > a').click();
           cy.wait(5000);
-          cy.get('.input-group > :nth-child(1) > .btn').click();
+          cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
           cy.get('.uib-datepicker-popup').contains('13').click();
           cy.get('.input-group > :nth-child(5) > .btn').click();
           cy.get('.uib-datepicker-popup').contains('19').click();

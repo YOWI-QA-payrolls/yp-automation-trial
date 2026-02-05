@@ -16,7 +16,7 @@ describe('login', () => {
     });
   
     describe('navigate to complete timesheet', () => {
-        it('should search calendar', function() { this.skip();
+        it('should search calendar', () => {
             cy.get('#employee_list > a').click(); 
             cy.get('#employee_income_deduction > ul.nav.nav-third-level.collapse')
             .invoke('removeAttr', 'style') // Remove 'style' attribute to make it visible

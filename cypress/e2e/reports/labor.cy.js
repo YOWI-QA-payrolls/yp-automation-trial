@@ -16,13 +16,13 @@ describe('login', () => {
     });
   
     describe('navigate to employee', () => {
-        it('should go to dashboard', function() { this.skip();
+        it('should go to dashboard', () => {
             cy.get('#reports_list > [href="#"]').click();
             cy.get('#labor_summary > a').click();
             cy.wait(2000);
             cy.get('.select2-chosen.ng-binding').click();
             cy.get(':nth-child(4) > .select2-result-label > .ng-binding.ng-scope').click();
-            cy.get('[ng-if="!main.no_search_button"]').click();
+            cy.get('#advance-search').click();
             cy.get(':nth-child(6) > .btn').click();
         });
     });

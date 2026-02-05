@@ -16,13 +16,13 @@ describe('login', () => {
     });
   
     describe('navigate to employee', () => {
-        it('should go to dashboard', function() { this.skip();
+        it('should go to dashboard', () => {
             cy.get('#reports_list > [href="#"]').click();
             cy.get('#employee_logs_monitoring > a').click();
             cy.wait(2000);
-            cy.get('.input-group > :nth-child(1) > .btn').click();
+            cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
             cy.wait(1000); // Waits for 1 second
-            cy.get('thead > :nth-child(1) > :nth-child(1) > .btn').click();
+            cy.get('.uib-datepicker-popup .uib-left').click();
             cy.wait(1000); // Waits for 1 second
             cy.get('.uib-datepicker-popup').contains('1').click();
             cy.get(':nth-child(8) > .btn').click();

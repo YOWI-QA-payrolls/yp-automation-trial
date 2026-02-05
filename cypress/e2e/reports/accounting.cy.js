@@ -16,7 +16,7 @@ describe('login', () => {
     });
   
     describe('navigate to employee', () => {
-        it('should go to dashboard', function() { this.skip();
+        it('should go to dashboard', () => {
             cy.get('#reports_list > [href="#"]').click();
             cy.get('#accounting_entries > a').click();
             cy.wait(2000);
