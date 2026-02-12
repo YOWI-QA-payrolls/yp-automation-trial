@@ -1,34 +1,18 @@
-// const { describe } = require("mocha");
-
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Employee Search - Calendar Search', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('Daily log', () => {
-        it('should calendar search', () => {
-          cy.get('#timesheets').click();
-          cy.get('#daily_logs > a').click();
-          cy.wait(2000);
-          cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
-          cy.get('.uib-datepicker-popup').contains('11').click();
-          cy.get('.input-group > :nth-child(5) > .btn').click();
-          cy.get('.uib-datepicker-popup').contains('12').click();
-          cy.get('.hand_cursor').click(); 
-        });
+
+    it('should filter daily logs by date range', () => {
+        cy.navigateMenu([
+            '#timesheets_list > a',
+            '#daily_logs > a'
+        ]);
+
+        cy.get('[ng-click="main.open_date(\'filter_date_from\')"]', { timeout: 15000 }).click();
+        cy.get('.uib-datepicker-popup').contains('11').click();
+        cy.get('.input-group > :nth-child(5) > .btn').click();
+        cy.get('.uib-datepicker-popup').contains('12').click();
+        cy.get('.hand_cursor').click();
     });
-  
-    // You can add more test cases here for other scenarios
-  });
-  
+});

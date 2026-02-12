@@ -1,33 +1,21 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Special Reports - Quincenal CC Earnings and Deductions Report', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to complete special reports', () => {
-        it('go to loan register', () => {
-            cy.get('#dmpi_reports_list > [href="#"]').click();
-            cy.wait(2000);
-            cy.get('#quincenal_list > [href=""]').click({ force: true });
-            cy.get('#cc_earnings_and_deductions > a').click();
-            cy.get('.select2-search-field > .select2-input').click();
-            cy.get('.select2-highlighted > .select2-result-label').click();
-            cy.get(':nth-child(4) > .btn').click();
 
-        });
+    it('should navigate to CC Earnings and Deductions, select payroll period, and generate report', () => {
+        cy.navigateMenu([
+            '#dmpi_reports_list > [href="#"]',
+            '#quincenal_list > a',
+            '#cc_earnings_and_deductions > a'
+        ]);
+
+        cy.select2First('.select2-search-field > .select2-input');
+
+        cy.get(':nth-child(4) > .btn', { timeout: 10000 })
+            .should('be.visible')
+            .should('not.be.disabled')
+            .click();
     });
-  
-    // You can add more test cases here for other scenarios
-  });
-  
+});

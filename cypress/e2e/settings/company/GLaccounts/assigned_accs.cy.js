@@ -1,25 +1,15 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Settings - GL Accounts - Assigned Accounts', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
- 
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-        });
+        cy.viewport(1280, 900);
+        cy.login();
     });
- 
-    describe('settings', () => {
-        it('profile', () => {
-            cy.get('#settings_list > a').click();
-            cy.get('#company_list > a').click({ force: true });
-            cy.get('#profiles > a').click({ force: true });
-            cy.get('#gl_accounts > a').click();
- 
-        }); // Closing it.skip('profile') test case
-    }); // Closing describe('settings')
-}); // Closing describe('login')
+
+    it('should navigate to GL Accounts assigned accounts page', () => {
+        cy.navigateMenu([
+            '#settings_list > a',
+            '#company_list > a',
+            '#profiles > a',
+            '#gl_accounts > a'
+        ]);
+    });
+});

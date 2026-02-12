@@ -1,35 +1,15 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Reports - Last Pay', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to employee', () => {
-        it('should go to dashboard', () => {
-            cy.get('#reports_list > [href="#"]').click();
-            cy.get('#last_pay > a').click();
-            cy.wait(2000);
-            cy.get('.select2-arrow > b').click();
-            cy.get(':nth-child(2) > .select2-result-label > .ng-binding').click();
-            // cy.get('.select2-highlighted > .select2-result-label > .ng-binding').click();
-            // cy.get('tr.ng-scope > :nth-child(2)').click();
-            // cy.get('.confirm').click();
 
-            cy.get('tr.ng-scope > :nth-child(2)').click();
-            cy.wait(2000);
-            cy.get('.confirm').click();
-        });
+    it('should view last pay report and confirm', () => {
+        cy.navigateMenu(['#reports_list > [href="#"]']);
+        cy.get('#side-menu').contains('Last Pay').should('exist').click({ force: true });
+        cy.select2First('.select2-arrow > b');
+        cy.get('tbody', { timeout: 30000 }).should('exist');
+        cy.get('tr.ng-scope > :nth-child(2)').click();
+        cy.get('.confirm', { timeout: 15000 }).should('be.visible').click();
     });
-  });
-  
+});

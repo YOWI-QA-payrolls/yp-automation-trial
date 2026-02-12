@@ -1,65 +1,38 @@
-
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Request - Leave Application', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to complete timesheet', () => {
-        it('should search calendar', () => {
-            cy.get('#requests_list > [href="#"] > .nav-label').click();
-            cy.get('#leave_request > a').click();
 
-            //calendar 
-            cy.get('[ng-click="main.open_date(\'filter_date_from\')"]').click();
-            cy.get('.uib-datepicker-popup .uib-left').click();
+    describe('Leave Application Workflow', () => {
+        it('should navigate to leave request, filter by date, and create a new leave application', () => {
+            cy.navigateMenu([
+                '#requests_list > a',
+                '#leave_request > a'
+            ]);
+
+            cy.get('[ng-click="main.open_date(\'filter_date_from\')"]', { timeout: 15000 }).should('be.visible').click();
+            cy.get('.uib-datepicker-popup .uib-left').should('be.visible').click();
             cy.get('.uib-datepicker-popup').contains('10').click();
             cy.get('tabletoolsdaterange2 > .input-group > .form-control.ng-pristine').clear().type('12/21/2024');
-            // cy.get('.hand_cursor').click();
 
-                        
-            // searchbar
-            // cy.get('tabletoolstrans > .input-group > .form-control').type('Juan')
-            // cy.get('[ng-if="!main.no_search_button"]').click();
+            cy.get('tbody', { timeout: 30000 }).should('exist');
 
-            cy.wait(2000);
+            cy.get('#advance-filter-btn', { timeout: 10000 })
+                .should('be.visible')
+                .click();
+            cy.get('#advance-search').should('be.visible').click();
 
-            // adv filter    
-            cy.get('#advance-filter-btn')
-            .click();
-            // cy.wait(2000);
-            cy.get('#advance-search').click();
+            cy.get('.form-group > .btn-group > .btn').should('not.be.disabled').click();
+            cy.select2First('.pull-left > .ui-select-container > .select2-choice');
+            cy.get('tbody', { timeout: 30000 }).should('exist');
+            cy.get('.col-sm-8 > :nth-child(2) > label').should('be.visible').click();
+            cy.select2First(':nth-child(10) > .ui-select-container > .select2-choice > .select2-arrow > b');
 
-            // create
-            cy.get('.form-group > .btn-group > .btn').click();
-            cy.get('.pull-left > .ui-select-container > .select2-choice').click();
-            cy.get(':nth-child(2) > .select2-result-label > .ng-binding').click();
-            cy.wait(2000);
-            cy.get('.col-sm-8 > :nth-child(2) > label').click()
-            cy.get(':nth-child(10) > .ui-select-container > .select2-choice > .select2-arrow > b').click();
-            cy.get(':nth-child(3) > .select2-result-label > .ng-binding').click();
-
-            cy.get(':nth-child(14) > .form-control').type('testing');
-            cy.get('#leave_submit').click();
-            cy.get('.cancel').click();
-            cy.get('.col-sm-8 > .pull-right > .btn').click();
-
-
-
+            cy.get(':nth-child(14) > .form-control').should('be.visible').type('testing');
+            cy.get('#leave_submit').should('not.be.disabled').click();
+            cy.get('.cancel').should('be.visible').click();
+            cy.get('.col-sm-8 > .pull-right > .btn').should('be.visible').click();
         });
     });
-  
-    // You can add more test cases here for other scenarios
-  });
-  
+});

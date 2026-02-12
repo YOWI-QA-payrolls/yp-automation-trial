@@ -1,36 +1,27 @@
-// const { describe } = require("mocha");
-
-
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Special Reports - Monthly Compensation Items Report', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
- 
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-           
-        });
+        cy.viewport(1280, 900);
+        cy.login();
     });
- 
-    describe('Special reports', () => {
-        it('loans', () => {
-          cy.get('#dmpi_reports_list > [href="#"]').click();
-          cy.get('#monthlies_list > [href=""]').click();
-          cy.get('#compensation_items > a').click({force: true});
-          cy.get('label > .ng-pristine').click();
-          cy.get('.select2-choices').click();
-          cy.get('.select2-highlighted > .select2-result-label').click();
-          cy.wait(2000);
-          cy.get(':nth-child(3) > .btn').click();
-         
-        });
+
+    it('should navigate to Compensation Items, toggle checkbox, select payroll period, and generate report', () => {
+        cy.navigateMenu([
+            '#dmpi_reports_list > [href="#"]',
+            '#monthlies_list > a',
+            '#compensation_items > a'
+        ]);
+
+        cy.get('label > .ng-pristine', { timeout: 10000 })
+            .should('exist')
+            .click();
+
+        cy.select2First('.select2-choices');
+
+        cy.get('tbody', { timeout: 30000 }).should('exist');
+
+        cy.get(':nth-child(3) > .btn', { timeout: 10000 })
+            .should('be.visible')
+            .should('not.be.disabled')
+            .click();
     });
- 
-    // You can add more test cases here for other scenarios
-  });// const { describe } = require("mocha");
- 
+});

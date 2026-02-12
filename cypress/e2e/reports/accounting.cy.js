@@ -1,29 +1,12 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Reports - Accounting Entries', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to employee', () => {
-        it('should go to dashboard', () => {
-            cy.get('#reports_list > [href="#"]').click();
-            cy.get('#accounting_entries > a').click();
-            cy.wait(2000);
-            cy.get('.select2-search-field > .select2-input').click();
-            cy.get(':nth-child(4) > .select2-result-label > .ng-binding.ng-scope').click();
-            cy.get('label > .ng-pristine').click();
-        });
+
+    it('should view accounting entries report', () => {
+        cy.navigateMenu(['#reports_list > [href="#"]', '#accounting_entries > a']);
+        cy.select2First('.select2-search-field > .select2-input');
+        cy.get('label > .ng-pristine', { timeout: 15000 }).should('exist').click();
     });
-  });
-  
+});

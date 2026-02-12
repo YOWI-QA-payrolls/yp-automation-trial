@@ -1,36 +1,17 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Reports - Employment Status: Employment Type', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to employee', () => {
-        it('should go to dashboard', () => {
-            cy.get('#reports_list > [href="#"]').click();
-            cy.get('#employee_status_list > [href=""]').click();
-            cy.wait(2000);
-            
-            // Make the parent ul.nav.nav-third-level.collapse visible
-            cy.get('ul.nav.nav-third-level.collapse').invoke('css', 'display', 'block'); // or 'flex'
-            
-            // Click on the New Hire link
-            cy.get('#employment_type > a').click();
-            cy.wait(2000);
-            cy.get('.form-group > .btn').click();
-            cy.get('tabletoolstrans > .input-group > .form-control').type('wow');
-            cy.get('[ng-if="!main.no_search_button"]').click();
-        });
+
+    it('should view employment type report', () => {
+        cy.navigateMenu([
+            '#reports_list > [href="#"]',
+            '#employee_status_list > a'
+        ]);
+        cy.get('#employment_type > a', { timeout: 15000 }).should('exist').click({ force: true });
+        cy.get('.form-group > .btn', { timeout: 15000 }).should('be.visible').click();
+        cy.get('tabletoolstrans > .input-group > .form-control', { timeout: 15000 }).type('wow');
+        cy.get('[ng-if="!main.no_search_button"]').click();
     });
-  });
-  
+});

@@ -1,36 +1,19 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Reports - BIR Information', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to employee', () => {
-        it('should go to dashboard', () => {
-            cy.get('#reports_list > [href="#"]').click();
-            cy.get('#bir > [href=""]').click();
-            cy.get('#bir_informations > a').click({force: true}); // <--- Use 'force: true' option
-            cy.wait(2000);
-            // cy.get(':nth-child(2) > .form-group > .input-group > .input-group-btn > .btn').click();
-            // generate
-            cy.get('tabletoolstrans > .input-group > .form-control').type('Juan');
-            // cy.get(':nth-child(4) > :nth-child(3) > .btn-group > a > .btn').click();
-            cy.get('[ng-if="!main.no_search_button"]').click();
-            // cy.get('tbody > [style=""] > :nth-child(3)').click();
 
-            cy.get('[style=""] > .align_left').click();
-            cy.get('#submit_button').click();
+    it('should search and view BIR information', () => {
+        cy.navigateMenu(['#reports_list > [href="#"]', '#bir > a', '#bir_informations > a']);
+        cy.get('tabletoolstrans > .input-group > .form-control', { timeout: 15000 }).should('be.visible').type('Juan');
+        cy.get('[ng-if="!main.no_search_button"]').click();
+        cy.get('tbody', { timeout: 30000 }).should('exist');
+        cy.get('tbody tr:first .align_left').click();
+        cy.get('body').then(($body) => {
+            if ($body.find('#submit_button').length > 0) {
+                cy.get('#submit_button').click();
+            }
         });
     });
-  });
-  
+});

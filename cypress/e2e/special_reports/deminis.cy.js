@@ -1,30 +1,18 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Special Reports - De Minimis / ECA Report', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to complete special reports', () => {
-        it('go to loan register', () => {
-            cy.get('#dmpi_reports_list > [href="#"]').click();
-            cy.wait(2000);
-            cy.get('#de_minimis_eca > a').click({ force: true });
-            cy.wait(2000);
-            cy.get('.form-group > .btn').click();
-        });
+
+    it('should navigate to De Minimis ECA report and generate it', () => {
+        cy.navigateMenu([
+            '#dmpi_reports_list > [href="#"]',
+            '#de_minimis_eca > a'
+        ]);
+
+        cy.get('.form-group > .btn', { timeout: 10000 })
+            .should('be.visible')
+            .should('not.be.disabled')
+            .click();
     });
-  
-    // You can add more test cases here for other scenarios
-  });
-  
+});

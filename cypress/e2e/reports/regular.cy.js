@@ -1,28 +1,11 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Reports - Regular Payroll Register', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to employee', () => {
-        it('should go to dashboard', () => {
-            cy.get('#reports_list > [href="#"]').click();
-            cy.get('.nav-second-level > .active > a').click();
-            cy.wait(2000);
-            cy.get('[ng-hide="$select.isEmpty()"]').click();
-            cy.get(':nth-child(2) > .select2-result-label > .ng-binding').click();
-        });
+
+    it('should view regular payroll register', () => {
+        cy.navigateMenu(['#reports_list > [href="#"]', '#payroll_register > a']);
+        cy.select2First('[ng-hide="$select.isEmpty()"]');
     });
-  });
-  
+});

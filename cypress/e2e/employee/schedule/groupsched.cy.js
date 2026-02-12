@@ -1,86 +1,38 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Employee Schedule - Group Schedule', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to complete timesheet', () => {
-        it('should search calendar', () => {
-            cy.get('#employee_list > a').click(); 
-            cy.get('#employeeschedule > a').click();
-            cy.get('.navbar > .nav > :nth-child(2) > a').click();
 
-            // //calendar 
-            // cy.get('.input-group > :nth-child(1) > .btn').click();
-            // cy.get('thead > :nth-child(1) > :nth-child(1) > .btn').click();
-            // cy.get('.uib-datepicker-popup').contains('11').click();
-            // cy.get('tabletoolsdaterange2 > .input-group > .form-control.ng-pristine').clear().type('01/30/2024');
-            // // cy.get('.hand_cursor').click();
+    it('should create a group schedule with day assignments', () => {
+        cy.navigateMenu([
+            '#employee_list > a',
+            '#employeeschedule > a',
+        ]);
+        cy.get('.navbar > .nav > :nth-child(2) > a', { timeout: 15000 }).should('be.visible').click({ force: true });
 
-                        
-            // // searchbar
-            // cy.get('tabletoolstrans > .input-group > .form-control').type('caleb')
-            // // cy.get('[ng-if="!main.no_search_button"]').click();
+        cy.get('.col-sm-2 > .btn', { timeout: 15000 }).should('be.visible').click();
+        cy.get('.form-control').type('testing');
+        cy.select2First('.select2-chosen.ng-binding');
 
-            // cy.wait(2000);
+        // Assign schedule to each day of the week
+        const daySelectors = [
+            '[ng-repeat="sorted_day in main.sorted_days_of_the_week"]:first .ui-select-container .select2-choice .select2-chosen.ng-binding',
+            ':nth-child(5) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding',
+            ':nth-child(6) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding',
+            ':nth-child(7) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding',
+            ':nth-child(8) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding',
+            ':nth-child(9) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding',
+            ':nth-child(10) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding',
+        ];
 
-            // // adv filter    
-            // cy.get('[ng-if="!main.no_filter && main.current_module != \'daily_logs\' && ![\'sss_contribution\',\'hdmf_contribution\',\'phic_contribution\', \'remittances_loan\'].includes(main.current_module)"]')
-            // .click();
-            // // cy.wait(2000);
-            // cy.get('.col-sm-12 > .btn-success').click();
-            // cy.wait(3000);
-
-            // create
-            cy.get('.col-sm-2 > .btn').click();
-            cy.get('.form-control').type('testing');
-            cy.get('.select2-chosen.ng-binding').click();
-            cy.get(':nth-child(2) > .select2-result-label > .ng-binding').click();
-            cy.get('[ng-repeat="sorted_day in main.sorted_days_of_the_week"][style=""] > .ui-select-container > .select2-choice > .select2-chosen.ng-binding').click();
-            cy.get('.select2-highlighted > .select2-result-label > [ng-bind-html="schedule.name | highlight: $select.search"]').click();
-            cy.get(':nth-child(5) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding').click();
-            cy.get('.select2-highlighted > .select2-result-label > [ng-bind-html="schedule.name | highlight: $select.search"]').click();
-            cy.get(':nth-child(6) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding').click();
-            cy.get('.select2-highlighted > .select2-result-label > [ng-bind-html="schedule.name | highlight: $select.search"]').click();
-            cy.get(':nth-child(7) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding').click();
-            cy.get('.select2-highlighted > .select2-result-label > [ng-bind-html="schedule.name | highlight: $select.search"]').click();
-            cy.get(':nth-child(8) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding').click();
-            cy.get('.select2-highlighted > .select2-result-label > [ng-bind-html="schedule.name | highlight: $select.search"]').click();
-            cy.get(':nth-child(9) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding').click();
-            cy.get('.select2-highlighted > .select2-result-label > [ng-bind-html="schedule.name | highlight: $select.search"]').click();
-            cy.get(':nth-child(10) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding').click();
-            cy.get('.select2-highlighted > .select2-result-label > [ng-bind-html="schedule.name | highlight: $select.search"]').click();
-            cy.get('.btn-success').click();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        daySelectors.forEach((selector) => {
+            cy.get(selector, { timeout: 10000 }).click();
+            cy.get('.select2-highlighted > .select2-result-label > [ng-bind-html="schedule.name | highlight: $select.search"]', { timeout: 10000 })
+                .should('be.visible')
+                .click();
         });
+
+        cy.get('.btn-success').click();
     });
-  
-    // You can add more test cases here for other scenarios
-  });
-  
+});

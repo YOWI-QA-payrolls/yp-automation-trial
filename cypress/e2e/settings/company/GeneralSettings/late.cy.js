@@ -1,96 +1,95 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Settings - General Settings - Late Configuration', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
- 
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-        });
+        cy.viewport(1280, 900);
+        cy.login();
     });
- 
-    describe('settings', () => {
-        it('10 mins late', () => {
 
-            cy.get('#settings_list > a').click();
-            cy.get('#company_list > a').click({ force: true });
-            cy.get('#profiles > a').click({ force: true });
-            cy.get('#companies_general_settings > a').click();
+    it('should set late grace period to 10 minutes and save', () => {
+        cy.navigateMenu([
+            '#settings_list > a',
+            '#company_list > a',
+            '#companies_general_settings > a'
+        ]);
 
-            cy.wait(2000);
+        cy.get('#tableee', { timeout: 30000 }).should('exist');
 
-            cy.get(':nth-child(1) > td').click();
+        cy.get(':nth-child(1) > td', { timeout: 15000 })
+            .should('be.visible')
+            .click();
 
-            cy.get('.form-control').clear().type('10');
+        cy.get('.form-control', { timeout: 10000 })
+            .should('be.visible')
+            .clear()
+            .type('10');
 
-            cy.wait(2000);
+        cy.get('.form-group > .btn', { timeout: 10000 })
+            .should('be.visible')
+            .should('not.be.disabled')
+            .click();
+    });
 
-            cy.get('.form-group > .btn').click();
+    it('should configure customized late deduction tiers', () => {
+        cy.navigateMenu([
+            '#settings_list > a',
+            '#company_list > a',
+            '#companies_general_settings > a'
+        ]);
 
-            // cy.get('#add_gp').click();
- 
-        }); // Closing it.skip('profile') test case
-    }); // Closing describe('settings')
+        cy.get('#tableee', { timeout: 30000 }).should('exist');
 
-    describe('settings', () => {
-        it('customized late', () => {
-            
-            cy.get('#settings_list > a').click();
-            cy.get('#company_list > a').click({ force: true });
-            cy.get('#profiles > a').click({ force: true });
-            cy.get('#companies_general_settings > a').click();
+        cy.get(':nth-child(1) > td', { timeout: 15000 })
+            .should('be.visible')
+            .click();
 
-            cy.wait(2000);
+        cy.get('#customize_late', { timeout: 10000 })
+            .should('exist')
+            .click();
 
-            cy.get(':nth-child(1) > td').click();
+        cy.get(':nth-child(1) > .form-control', { timeout: 10000 })
+            .should('be.visible')
+            .type('5');
 
-            cy.get('#customize_late').click();
+        cy.get('.form > :nth-child(2) > .form-control', { timeout: 10000 })
+            .should('be.visible')
+            .type('10');
 
-            cy.get(':nth-child(1) > .form-control').type('5');
+        cy.get(':nth-child(3) > .form-control', { timeout: 10000 })
+            .should('be.visible')
+            .type('10');
 
-            cy.get('.form > :nth-child(2) > .form-control').type('10');
+        cy.get('.pull-right > .btn-success', { timeout: 10000 })
+            .should('be.visible')
+            .should('not.be.disabled')
+            .click();
+    });
 
-            cy.get(':nth-child(3) > .form-control').type('10');
+    it('should configure late multiplier and offset timeout settings', () => {
+        cy.navigateMenu([
+            '#settings_list > a',
+            '#company_list > a',
+            '#companies_general_settings > a'
+        ]);
 
-            cy.get('.pull-right > .btn-success').click();
+        cy.get('#tableee', { timeout: 30000 }).should('exist');
 
-            // cy.get('#add_gp').click();
- 
-        }); // Closing it.skip('profile') test case
-    }); // Closing describe('settings')
+        cy.get(':nth-child(1) > td', { timeout: 15000 })
+            .should('be.visible')
+            .click();
 
-    describe('settings', () => {
-        it('customized late', () => {
-            
-            cy.get('#settings_list > a').click();
-            cy.get('#company_list > a').click({ force: true });
-            cy.get('#profiles > a').click({ force: true });
-            cy.get('#companies_general_settings > a').click();
+        cy.get('#is_late_multiplier_used', { timeout: 10000 })
+            .should('exist')
+            .click();
 
+        cy.get('.row > .form-control', { timeout: 10000 })
+            .should('be.visible')
+            .type('2');
 
-            cy.get(':nth-child(1) > td').click();
+        cy.get('#offset_timeout', { timeout: 10000 })
+            .should('exist')
+            .click();
 
-
-            cy.wait(5000);
-
-            cy.get('#is_late_multiplier_used').click();
-
-            cy.wait(2000);
-
-            cy.get('.row > .form-control').type('2');
-
-            cy.get('#offset_timeout').click();
-
-
-            cy.get('#is_consider_grace_period_for_flexible_schdule').click();
-
-            // cy.get('#add_gp').click();
- 
-        }); // Closing it.skip('profile') test case
-    }); // Closing describe('settings')
-    
-}); // Closing describe('login')
+        cy.get('#is_consider_grace_period_for_flexible_schdule', { timeout: 10000 })
+            .should('exist')
+            .click();
+    });
+});

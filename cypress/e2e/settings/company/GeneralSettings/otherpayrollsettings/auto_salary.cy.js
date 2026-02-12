@@ -1,37 +1,31 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Settings - General Settings - Auto Salary Increment', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
- 
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-        });
+        cy.viewport(1280, 900);
+        cy.login();
     });
 
-    describe('settings', () => {
-        it('customized late', () => {
-            
-            cy.get('#settings_list > a').click();
-            cy.get('#company_list > a').click({ force: true });
-            cy.get('#profiles > a').click({ force: true });
-            cy.get('#companies_general_settings > a').click();
+    it('should toggle auto salary increment setting', () => {
+        cy.navigateMenu([
+            '#settings_list > a',
+            '#company_list > a',
+            '#companies_general_settings > a'
+        ]);
 
-            cy.get(':nth-child(10) > td').click();
+        cy.get('#tableee', { timeout: 30000 }).should('exist');
 
-            cy.get(':nth-child(7) > td').click();
+        cy.get(':nth-child(10) > td', { timeout: 15000 })
+            .should('be.visible')
+            .click();
 
-            cy.get('#is_auto_salary_increment').click();
+        cy.get(':nth-child(7) > td', { timeout: 10000 })
+            .should('be.visible')
+            .click();
 
-            cy.get('.form-group > .btn');
+        cy.get('#is_auto_salary_increment', { timeout: 10000 })
+            .should('exist')
+            .click();
 
-
- 
-        }); // Closing it.skip('profile') test case
-    }); // Closing describe('settings')
-    
-}); // Closing describe('login')
+        cy.get('.form-group > .btn', { timeout: 10000 })
+            .should('exist');
+    });
+});

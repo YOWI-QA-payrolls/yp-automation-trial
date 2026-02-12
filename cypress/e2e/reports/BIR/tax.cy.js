@@ -1,33 +1,14 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Reports - BIR Tax Report', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to employee', () => {
-        it('should go to dashboard', () => {
-            cy.get('#reports_list > [href="#"]').click();
-            cy.get('#bir > [href=""]').click();
-            cy.get('#tax_report > a').click({force: true}); // <--- Use 'force: true' option
-            cy.wait(2000);
-            // cy.get(':nth-child(2) > .form-group > .input-group > .input-group-btn > .btn').click();
-            // generate
-            cy.get('tabletoolstrans > .input-group > .form-control').type('Juan');
-            // cy.get(':nth-child(4) > :nth-child(3) > .btn-group > a > .btn').click();
-            cy.get('[ng-if="!main.no_search_button"]').click();
-            cy.get('tbody > [style=""] > :nth-child(3)').click();
-        });
+
+    it('should search and view tax report', () => {
+        cy.navigateMenu(['#reports_list > [href="#"]', '#bir > a', '#tax_report > a']);
+        cy.get('tabletoolstrans > .input-group > .form-control', { timeout: 15000 }).should('be.visible').type('Juan');
+        cy.get('[ng-if="!main.no_search_button"]').click();
+        cy.get('tbody', { timeout: 30000 }).should('exist');
+        cy.get('tbody tr:first > :nth-child(3)').click();
     });
-  });
-  
+});

@@ -1,30 +1,12 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Reports - De Minimis', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
         cy.viewport(1280, 900);
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
-  
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
-            
-        });
+        cy.login();
     });
-  
-    describe('navigate to employee', () => {
-        it('should go to dashboard', () => {
-            cy.get('#reports_list > [href="#"]').click();
-            cy.get('#de_minimis_report2 > a').click();
-            cy.wait(2000);
-            // cy.get('.form-group > .btn').click();
-            cy.get('.select2-choice > [ng-hide="$select.isEmpty()"]').click();
-            cy.get(':nth-child(2) > .select2-result-label > .ng-binding').click();
-            cy.get('.form-group > .btn').click();
-        });
+
+    it('should view de minimis report', () => {
+        cy.navigateMenu(['#reports_list > [href="#"]', '#de_minimis_report2 > a']);
+        cy.select2First('.select2-choice');
+        cy.get('.form-group > .btn').click();
     });
-  });
-  
+});

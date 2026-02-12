@@ -1,87 +1,57 @@
-describe('login', () => {
-    // This code will run before each test case in this describe block
+describe('Concern - Late Settings', () => {
     beforeEach(() => {
-        // Load login credentials from the fixture file
-        cy.fixture('credentials').then(credentials => {
-            const { url, email, pass } = credentials;
- 
-            // Login
-            cy.visit(url);
-            cy.get('#email').type(email);
-            cy.get('#password').type(pass);
-            cy.get('#signin-button').click();
+        cy.viewport(1280, 900);
+        cy.login();
+    });
+
+    describe('Configure 10 Minutes Late Setting', () => {
+        it('should navigate to company settings and set 10 minute late threshold', () => {
+            cy.navigateMenu([
+                '#settings_list > a',
+                '#company_list > a',
+                '#companies_general_settings > a'
+            ]);
+
+            cy.get('#tableee', { timeout: 30000 }).should('exist');
+            cy.get(':nth-child(1) > td').should('be.visible').click();
+
+            cy.get('.form-control').should('be.visible').clear().type('10');
+
+            cy.get('.form-group > .btn').should('not.be.disabled').click();
         });
     });
- 
-    describe('settings', () => {
-        it('10 mins late', () => {
 
-            cy.get('#settings_list > a').click();
-            cy.get('#company_list > a').click({ force: true });
-            cy.get('#profiles > a').click({ force: true });
-            cy.get('#companies_general_settings > a').click();
+    describe('Configure Customized Late Setting', () => {
+        it('should navigate to company settings and configure customized late thresholds', () => {
+            cy.navigateMenu([
+                '#settings_list > a',
+                '#company_list > a',
+                '#companies_general_settings > a'
+            ]);
 
-            cy.wait(2000);
+            cy.get('#tableee', { timeout: 30000 }).should('exist');
+            cy.get(':nth-child(1) > td').should('be.visible').click();
 
-            cy.get(':nth-child(1) > td').click();
+            cy.get('#customize_late').should('be.visible').click();
 
-            cy.get('.form-control').clear().type('10');
+            cy.get(':nth-child(1) > .form-control').should('be.visible').type('5');
+            cy.get('.form > :nth-child(2) > .form-control').should('be.visible').type('10');
+            cy.get(':nth-child(3) > .form-control').should('be.visible').type('10');
 
-            cy.wait(2000);
+            cy.get('.pull-right > .btn-success').should('not.be.disabled').click();
+        });
+    });
 
-            cy.get('.form-group > .btn').click();
+    describe('Verify Company Settings Page Load', () => {
+        it('should navigate to company settings and select a company row', () => {
+            cy.navigateMenu([
+                '#settings_list > a',
+                '#company_list > a',
+                '#companies_general_settings > a'
+            ]);
 
-            // cy.get('#add_gp').click();
- 
-        }); // Closing it.skip('profile') test case
-    }); // Closing describe('settings')
-
-    describe('settings', () => {
-        it('customized late', () => {
-            
-            cy.get('#settings_list > a').click();
-            cy.get('#company_list > a').click({ force: true });
-            cy.get('#profiles > a').click({ force: true });
-            cy.get('#companies_general_settings > a').click();
-
-            cy.wait(2000);
-
-            cy.get(':nth-child(1) > td').click();
-
-            cy.get('#customize_late').click();
-
-            cy.get(':nth-child(1) > .form-control').type('5');
-
-            cy.get('.form > :nth-child(2) > .form-control').type('10');
-
-            cy.get(':nth-child(3) > .form-control').type('10');
-
-            cy.get('.pull-right > .btn-success').click();
-
-            // cy.get('#add_gp').click();
- 
-        }); // Closing it.skip('profile') test case
-    }); // Closing describe('settings')
-
-    describe('settings', () => {
-        it('customized late', () => {
-            
-            cy.get('#settings_list > a').click();
-            cy.get('#company_list > a').click({ force: true });
-            cy.get('#profiles > a').click({ force: true });
-            cy.get('#companies_general_settings > a').click();
-
-
-            cy.get(':nth-child(1) > td').click();
-
-
-            cy.wait(5000);
-
-
-
-            // cy.get('#add_gp').click();
- 
-        }); // Closing it.skip('profile') test case
-    }); // Closing describe('settings')
-    
-}); // Closing describe('login')
+            cy.get('#tableee', { timeout: 30000 }).should('exist');
+            cy.get(':nth-child(1) > td').should('be.visible').click();
+        });
+    });
+});
