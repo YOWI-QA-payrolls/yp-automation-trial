@@ -19,10 +19,10 @@ describe('Employee Bank Accounts', () => {
 
         cy.get('tbody', { timeout: 30000 }).should('exist');
 
-        cy.get('tr.ng-scope > :nth-child(3)').click();
+        cy.get('tr.ng-scope > :nth-child(3)').click({ multiple: true });
         cy.get('#account_number').type('12345678');
         cy.get('#transaction_reference').type('123testing');
-        cy.get('.input-group-btn > .btn').click();
+        cy.get('.input-group-btn > .btn:visible').click({ multiple: true });
         cy.get('.btn-info').click();
         cy.select2First('.select2-chosen.ng-binding');
     });
