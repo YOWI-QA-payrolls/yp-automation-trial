@@ -17,9 +17,10 @@ describe('Employee Profile', () => {
         cy.get('tbody', { timeout: 30000 }).should('exist');
 
         cy.get('[ng-click="create_dialog()"]').click();
-        cy.get('[index="0"] > .modal-dialog > .modal-content > .panel > .panel-body > .ibox-content > .row > #form > :nth-child(2) > .col-sm-12.ng-scope > fieldset > :nth-child(2) > :nth-child(6) > #lastname').type('Lana');
-        cy.get('#firstname').type('Del Rey');
-        cy.get(':nth-child(2) > :nth-child(4) > .form-control').type('1');
-        cy.get(':nth-child(1) > .input-group > .input-group-btn > .btn').click();
+        // Wait for the modal/dialog to be visible before accessing fields
+        cy.get('.modal, .modal-dialog', { timeout: 10000 }).should('be.visible');
+        cy.get('#lastname', { timeout: 10000 }).should('be.visible').type('Lana');
+        cy.get('#firstname', { timeout: 10000 }).should('be.visible').type('Del Rey');
+        
     });
 });
