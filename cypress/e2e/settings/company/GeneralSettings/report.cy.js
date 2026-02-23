@@ -11,11 +11,8 @@ describe('Settings - General Settings - Report Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(9) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Report');
 
         cy.get('#internal_balance', { timeout: 10000 })
             .should('exist')

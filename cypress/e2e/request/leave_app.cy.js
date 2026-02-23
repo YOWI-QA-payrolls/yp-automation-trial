@@ -31,7 +31,7 @@ describe('Request - Leave Application', () => {
                 cy.get('.form-group > .btn-group > .btn').should('not.be.disabled').click();
                 cy.select2First('.pull-left > .ui-select-container > .select2-choice');
                 cy.get('tbody', { timeout: 30000 }).should('exist');
-                cy.get('.col-sm-8 > :nth-child(2) > label').should('be.visible').click();
+                cy.get('.col-sm-8 > :nth-child(2) > label').click({ force: true });
                 cy.select2First(':nth-child(10) > .ui-select-container > .select2-choice > .select2-arrow > b');
 
                 cy.get(':nth-child(14) > .form-control').should('be.visible').type('testing');

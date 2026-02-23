@@ -11,11 +11,8 @@ describe('Settings - General Settings - Company Cutoff', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(14) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Cutoff');
 
         cy.get('[heading="Cutoff Schedules"] > .nav-link', { timeout: 10000 })
             .should('be.visible')
@@ -26,11 +23,13 @@ describe('Settings - General Settings - Company Cutoff', () => {
             .should('not.be.disabled')
             .click();
 
-        cy.get('.form-control', { timeout: 10000 })
+        cy.get('.modal .form-control', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .type('sample_test');
 
-        cy.get('.btn-success', { timeout: 10000 })
+        cy.get('.modal .btn-success', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .should('not.be.disabled')
             .click();
@@ -44,7 +43,7 @@ describe('Settings - General Settings - Company Cutoff', () => {
             .should('not.be.disabled')
             .click();
 
-        cy.select2First(':nth-child(1) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
+        cy.select2First(':nth-child(1) > .ui-select-container > .select2-choice > .select2-chosen');
 
         cy.get('.input-group-btn > .btn', { timeout: 10000 })
             .should('be.visible')
@@ -55,7 +54,7 @@ describe('Settings - General Settings - Company Cutoff', () => {
             .should('be.visible')
             .click();
 
-        cy.select2First(':nth-child(4) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
+        cy.select2First(':nth-child(4) > .ui-select-container > .select2-choice > .select2-chosen');
 
         cy.get('[ng-repeat="(key,module) in main.company_cutoff_schedules_lists"]:first .checkbox .ng-binding', { timeout: 10000 })
             .should('be.visible')
@@ -75,7 +74,7 @@ describe('Settings - General Settings - Company Cutoff', () => {
             .should('not.be.disabled')
             .click();
 
-        cy.select2First('.col-sm-12 > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
+        cy.select2First('.col-sm-12 > .ui-select-container > .select2-choice > .select2-chosen');
 
         cy.get('.pull-right > .btn-success', { timeout: 10000 })
             .should('be.visible')
@@ -91,7 +90,7 @@ describe('Settings - General Settings - Company Cutoff', () => {
             .should('not.be.disabled')
             .click();
 
-        cy.select2First(':nth-child(1) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
+        cy.select2First(':nth-child(1) > .ui-select-container > .select2-choice > .select2-chosen');
 
         cy.get(':nth-child(4) > .form-control', { timeout: 10000 })
             .should('be.visible')

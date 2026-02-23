@@ -33,11 +33,12 @@ Cypress.Commands.add('waitForLoading', () => {
 
 // Select the first option from a select2 dropdown (handles ui-select hidden containers)
 Cypress.Commands.add('select2First', (triggerSelector) => {
-    cy.get(triggerSelector, { timeout: 10000 }).should('exist').click({ force: true });
+    cy.get(triggerSelector, { timeout: 10000 }).should('exist').first().click({ force: true });
     cy.get('.select2-results', { timeout: 10000 }).should('exist');
-    cy.get('.select2-results .select2-result-label', { timeout: 10000 })
+    cy.get('.select2-results .ui-select-choices-row-inner', { timeout: 10000 })
         .first()
         .click({ force: true });
+    cy.wait(500);
 });
 
 // Dismiss any toast notifications if present
@@ -47,4 +48,18 @@ Cypress.Commands.add('dismissToast', () => {
             cy.get('.toast').click({ multiple: true, force: true });
         }
     });
+});
+
+// Wait for #tableee settings table rows to load
+Cypress.Commands.add('waitForSettingsTable', (timeout = 30000) => {
+    cy.get('#tableee', { timeout }).should('exist');
+    cy.get('#tableee tbody tr', { timeout }).should('have.length.greaterThan', 0);
+});
+
+// Click a settings row by its text content
+Cypress.Commands.add('clickSettingsRow', (rowText) => {
+    cy.get('#tableee tbody', { timeout: 15000 })
+        .contains('tr', rowText, { timeout: 15000 })
+        .should('be.visible')
+        .click();
 });

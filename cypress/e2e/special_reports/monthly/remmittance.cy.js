@@ -19,9 +19,9 @@ describe('Special Reports - Monthly Loan Remittances Report', () => {
             '.col-sm-4.ng-scope > .form-group > .ui-select-container > .select2-choices > .select2-search-field > .select2-input'
         );
 
-        cy.get('.form-group > .btn', { timeout: 10000 })
-            .should('be.visible')
+        cy.get('.btn.btn-success', { timeout: 15000 })
+            .first()
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 });

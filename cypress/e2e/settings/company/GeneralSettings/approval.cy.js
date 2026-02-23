@@ -11,11 +11,8 @@ describe('Settings - General Settings - Approval Settings', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(4) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Approval');
 
         cy.get('#has_approval_hierarchy', { timeout: 10000 })
             .should('exist')

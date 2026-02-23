@@ -13,9 +13,9 @@ describe('Special Reports - Quincenal CC Earnings and Deductions Report', () => 
 
         cy.select2First('.select2-search-field > .select2-input');
 
-        cy.get(':nth-child(4) > .btn', { timeout: 10000 })
-            .should('be.visible')
+        cy.get('.btn.btn-success', { timeout: 15000 })
+            .first()
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 });

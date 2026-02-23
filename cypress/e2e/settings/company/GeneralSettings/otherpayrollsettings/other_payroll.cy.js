@@ -11,15 +11,9 @@ describe('Settings - General Settings - Other Payroll Settings', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(10) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
-
-        cy.get(':nth-child(2) > td', { timeout: 10000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Other Payroll Settings');
+        cy.clickSettingsRow('Premium Rate');
 
         cy.get('#no_holiday_pay', { timeout: 10000 })
             .should('exist')

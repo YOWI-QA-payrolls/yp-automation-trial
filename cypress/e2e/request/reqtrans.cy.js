@@ -26,11 +26,11 @@ describe('Request - Transfer', () => {
                 .click();
             cy.get('#advance-search').should('be.visible').click();
 
-            cy.get('.iCheck-helper').should('exist').click();
+            cy.get('.iCheck-helper').first().should('exist').click();
             cy.select2First('.select2-arrow > b');
             cy.select2First('.select2-arrow > b');
 
-            cy.get('.form-group > .btn-group > .btn').should('not.be.disabled').click();
+            cy.get('.form-group > .btn-group > .btn').first().should('not.be.disabled').click();
             cy.get(':nth-child(2) > .input-group > .input-group-btn > .btn').should('be.visible').click();
             cy.get('.btn-info').should('not.be.disabled').click();
             cy.select2First(':nth-child(5) > .ui-select-container > .select2-choice > .select2-arrow > b');

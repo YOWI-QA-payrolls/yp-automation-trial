@@ -11,11 +11,8 @@ describe('Settings - General Settings - Kiosk Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(11) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Kiosk');
 
         cy.get('#show_payslip_not_viewed', { timeout: 10000 })
             .should('exist');

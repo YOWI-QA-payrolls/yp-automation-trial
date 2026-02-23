@@ -35,10 +35,11 @@ describe('Timesheet Reports - Manpower Analysis Report', () => {
             cy.get('tabletoolsdaterange2 > .input-group > .form-control.ng-pristine').clear().type('12/26/2023');
             cy.get('.input-group > .hand_cursor').should('be.visible').click();
             cy.get('.input-group > .ui-select-container > .select2-choice > .select2-arrow > b')
+                .first()
                 .should('be.visible')
                 .click();
             cy.get(':nth-child(2) > .select2-result-label > .ng-binding').should('be.visible').click();
-            cy.get('div.pull-right > [type="button"]').should('not.be.disabled').click();
+            cy.get('div.pull-right > [type="button"]').first().should('not.be.disabled').click();
         });
     });
 });

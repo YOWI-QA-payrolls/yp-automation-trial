@@ -11,11 +11,8 @@ describe('Settings - General Settings - Schedule Email', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(12) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Schedule Email');
 
         cy.get('.form-group > .btn', { timeout: 10000 })
             .should('be.visible')

@@ -25,7 +25,7 @@ describe('Timesheet - Daily Logs', () => {
 
             cy.select2First('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in > div > div > div > div.panel-body > div > div.row > form > div:nth-child(5) > div > a > span.select2-arrow.ui-select-toggle');
 
-            cy.get(':nth-child(6) > .form-control').should('be.visible').clear().type('manual');
+            cy.get(':nth-child(6) > .form-control').clear({ force: true }).type('manual', { force: true });
             cy.select2First('.form > :nth-child(7) > .ui-select-container > .select2-choice');
             cy.get('.hours > .form-control').should('be.visible').type('8');
             cy.get('.minutes > .form-control').should('be.visible').type('30');

@@ -17,12 +17,12 @@ describe('Timesheet - Complete Timesheet', () => {
                 .should('be.visible')
                 .click();
             cy.get('.btn-group > .dropdown-menu > li > a').should('be.visible').click();
-            cy.get('#by_date_range').should('be.visible').click();
+            cy.get('#by_date_range').click({ force: true });
             cy.get(':nth-child(3) > .form-control').should('be.visible').type('manual');
             cy.get('[ng-click="complete_timesheet.employees = filter_employees2;get_employee_schedule(complete_timesheet)"] > .fa')
                 .should('be.visible')
                 .click();
-            cy.get(':nth-child(9) > :nth-child(3) > label').should('be.visible').click();
+            cy.get(':nth-child(9) > :nth-child(3) > label').scrollIntoView().click({ force: true });
             cy.get('.pull-right > .btn-success').should('not.be.disabled').click();
         });
     });

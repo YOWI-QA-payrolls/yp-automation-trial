@@ -11,11 +11,8 @@ describe('Settings - General Settings - Agency Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(7) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Agency');
 
         cy.get('#has_agency', { timeout: 10000 })
             .should('exist')
