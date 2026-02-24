@@ -54,8 +54,8 @@ describe('Request - Transfer', () => {
                 cy.select2First('tr.ng-scope > :nth-child(1) > .ui-select-container > .select2-choice > .select2-arrow > b');
                 cy.wait(1000);
                 cy.select2First('tr.ng-scope > :nth-child(2) > .ui-select-container > .select2-choice > .select2-arrow > b');
-                cy.get('tr.ng-scope > :nth-child(3) > .form-control').should('be.visible').clear().type('08:00');
-                cy.get('tr.ng-scope > :nth-child(4) > .form-control').should('be.visible').clear().type('17:00');
+                cy.get('tr.ng-scope > :nth-child(3) input').should('be.visible').first().clear().type('08:00');
+                cy.get('tr.ng-scope > :nth-child(4) input').should('be.visible').first().clear().type('17:00');
                 cy.get('.col-sm-6 > .form-control').should('be.visible').type('testing');
                 cy.get(':nth-child(2) > .ng-isolate-scope > .uib-timepicker > tbody > :nth-child(2) > .hours > .form-control')
                     .should('be.visible').clear().type('08');
