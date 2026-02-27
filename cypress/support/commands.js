@@ -34,8 +34,8 @@ Cypress.Commands.add('waitForLoading', () => {
 // Select the first option from a select2 dropdown (handles ui-select hidden containers)
 Cypress.Commands.add('select2First', (triggerSelector) => {
     cy.get(triggerSelector, { timeout: 10000 }).should('exist').first().click({ force: true });
-    cy.get('.select2-results', { timeout: 10000 }).should('exist');
-    cy.get('.select2-results .ui-select-choices-row-inner', { timeout: 10000 })
+    cy.get('.select2-results', { timeout: 15000 }).should('exist');
+    cy.get('.select2-results .ui-select-choices-row-inner', { timeout: 15000 })
         .first()
         .click({ force: true });
     cy.wait(500);

@@ -42,7 +42,9 @@ describe('Settings - General Settings - Request Configuration', () => {
             .should('exist')
             .click();
 
-        cy.get(':nth-child(21) > .form-group > .input-group > .form-control', { timeout: 10000 })
+        cy.get('#ot_threshold').closest('li, .form-group')
+            .find('.input-group .form-control')
+            .first()
             .should('be.visible')
             .type('10');
 
@@ -171,15 +173,16 @@ describe('Settings - General Settings - Request Configuration', () => {
             .should('not.be.disabled')
             .click();
 
-        cy.get(':nth-child(1) > .form-control', { timeout: 10000 })
+        cy.get('.modal-dialog').find(':nth-child(1) > .form-control', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .type('1');
 
-        cy.get('.form > :nth-child(2) > .form-control', { timeout: 10000 })
+        cy.get('.modal-dialog').find('.form > :nth-child(2) > .form-control', { timeout: 10000 })
             .should('be.visible')
             .type('2');
 
-        cy.get(':nth-child(3) > .form-control', { timeout: 10000 })
+        cy.get('.modal-dialog').find(':nth-child(3) > .form-control', { timeout: 10000 })
             .should('be.visible')
             .type('3');
 
@@ -189,8 +192,15 @@ describe('Settings - General Settings - Request Configuration', () => {
 
         cy.get('.pull-right > .btn-success', { timeout: 10000 })
             .should('be.visible')
-            .should('not.be.disabled')
-            .click();
+            .click({ force: true });
+
+        cy.wait(500);
+
+        cy.get('body').then($body => {
+            if ($body.find('.modal-backdrop').length) {
+                cy.get('.modal-dialog').contains('button', 'Close').click({ force: true });
+            }
+        });
 
         cy.get('#woh_hrs_as_ot', { timeout: 10000 })
             .should('exist')

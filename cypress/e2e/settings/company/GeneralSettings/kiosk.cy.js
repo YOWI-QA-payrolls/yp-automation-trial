@@ -74,11 +74,15 @@ describe('Settings - General Settings - Kiosk Configuration', () => {
 
         cy.get('#has_timein_out_access', { timeout: 10000 })
             .should('exist')
-            .click();
+            .check({ force: true });
 
-        cy.get('[ng-if="kiosk_settings.has_timein_out_access"]:first .col-sm-8 .ui-select-container .select2-choices .select2-search-field .select2-input', { timeout: 10000 })
+        cy.wait(1000);
+
+        cy.get('#has_timein_out_access').closest('li, .col-sm-12')
+            .find('.select2-input, .ui-select-container .select2-choice')
+            .first()
             .should('be.visible')
-            .click();
+            .click({ force: true });
 
         cy.get('.select2-results', { timeout: 10000 }).then($results => {
             const visibleResults = $results.find('.select2-result-label:visible');

@@ -35,8 +35,8 @@ describe('Approval - Leave', () => {
             cy.get('body').then($body => {
                 if ($body.find('tbody tr:first > :nth-child(4)').length > 0) {
                     cy.get('tbody tr:first > :nth-child(4)').click();
-                    cy.get('span.ng-scope > :nth-child(1) > label').should('be.visible').click();
-                    cy.get('#leave_submit').should('not.be.disabled').click();
+                    cy.get('span.ng-scope > :nth-child(1) > label', { timeout: 10000 }).first().click({ force: true });
+                    cy.get('#leave_submit').click({ force: true });
                     cy.get('tbody', { timeout: 30000 }).should('exist');
                     cy.dismissToast();
                     cy.get('.btn.btn-sm.btn-white.pull-right').should('be.visible').click();

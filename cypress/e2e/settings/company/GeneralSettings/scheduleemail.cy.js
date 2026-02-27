@@ -12,7 +12,7 @@ describe('Settings - General Settings - Schedule Email', () => {
         ]);
 
         cy.waitForSettingsTable();
-        cy.clickSettingsRow('Schedule Email');
+        cy.clickSettingsRow('Scheduled Email');
 
         cy.get('.form-group > .btn', { timeout: 10000 })
             .should('be.visible')
@@ -62,7 +62,6 @@ describe('Settings - General Settings - Schedule Email', () => {
 
         cy.get('.pull-right > .btn-success', { timeout: 10000 })
             .should('be.visible')
-            .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 });

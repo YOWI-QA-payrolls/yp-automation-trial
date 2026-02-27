@@ -24,6 +24,7 @@ describe('Settings - General Settings - Minimum Wage', () => {
             .click();
 
         cy.get('.input-group-btn > .btn', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .should('not.be.disabled')
             .click();

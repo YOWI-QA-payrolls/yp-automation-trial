@@ -10,7 +10,8 @@ describe('Employee Activity', () => {
             '#employee_performance > a',
         ]);
 
-        cy.get('tabletoolstrans > .input-group > .form-control', { timeout: 15000 })
+        cy.get('tabletoolstrans .form-control', { timeout: 15000 })
+            .first()
             .should('be.visible')
             .type('caleb');
 

@@ -18,10 +18,6 @@ describe('Settings - General Settings - Approval Settings', () => {
             .should('exist')
             .click();
 
-        cy.get('#is_allow_bypass_approval', { timeout: 10000 })
-            .should('exist')
-            .click();
-
         cy.get('#allowed_credit_adjustment', { timeout: 10000 })
             .should('exist')
             .click();

@@ -20,8 +20,8 @@ describe('Timesheet - Daily Logs', () => {
             cy.get('.form > :nth-child(1) > .input-group > .input-group-btn > .btn')
                 .should('be.visible')
                 .click();
-            cy.get('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in > div > div > div > div.panel-body > div > div.row > form > div:nth-child(1) > p.input-group > div')
-                .contains('5').click();
+            cy.get('.modal.in .panel-body form div:nth-child(1) p.input-group > div', { timeout: 10000 })
+                .contains('5').click({ force: true });
 
             cy.get('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in > div > div > div > div.panel-body > div > div.row > form > div:nth-child(5) > div > a > span.select2-arrow.ui-select-toggle', { timeout: 10000 })
                 .should('exist').first().click({ force: true });

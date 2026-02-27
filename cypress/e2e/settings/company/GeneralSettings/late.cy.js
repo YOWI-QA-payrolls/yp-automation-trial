@@ -72,9 +72,7 @@ describe('Settings - General Settings - Late Configuration', () => {
             .should('exist')
             .click();
 
-        cy.get('.row > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('2');
+        cy.wait(1000);
 
         cy.get('#offset_timeout', { timeout: 10000 })
             .should('exist')

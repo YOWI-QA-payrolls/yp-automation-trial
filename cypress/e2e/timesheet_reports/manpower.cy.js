@@ -19,11 +19,13 @@ describe('Timesheet Reports - Manpower Analysis Report', () => {
 
             cy.get(':nth-child(3) > .ui-select-container > .select2-choice > .select2-arrow > b', { timeout: 10000 })
                 .should('be.visible')
+                .first()
                 .click();
             cy.get(':nth-child(2) > .select2-result-label > .ng-binding').should('be.visible').click();
             cy.get('tbody', { timeout: 30000 }).should('exist');
             cy.get(':nth-child(3) > .ui-select-container > .select2-choice > .select2-arrow > b')
                 .should('be.visible')
+                .first()
                 .click();
             cy.get(':nth-child(1) > .select2-result-label > .ng-binding').should('be.visible').click();
             cy.get('tbody', { timeout: 30000 }).should('exist');

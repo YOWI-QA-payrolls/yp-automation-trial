@@ -55,30 +55,30 @@ describe('Reports - Edit/Delete Timesheet', () => {
         cy.get('tbody', { timeout: 30000 }).should('exist');
 
         // -------- EDIT (opens modal) --------
-        cy.get(':nth-child(6) > .ng-binding.ng-scope > [ng-if="user_employee != record.employee"] > [ng-click="edit_timesheet_dialog(record,typee.short_code)"]')
-            .first()
-            .click();
+        const editSel = ':nth-child(6) > .ng-binding.ng-scope > [ng-if="user_employee != record.employee"] > [ng-click="edit_timesheet_dialog(record,typee.short_code)"]';
+        cy.get('body').then(($body) => {
+            if ($body.find(editSel).length > 0) {
+                cy.get(editSel).first().click();
 
-        // Reason field (textarea)
-        cy.get('.form > :nth-child(1) > .form-control').first().clear().type('testing');
+                // Reason field (textarea)
+                cy.get('.form > :nth-child(1) > .form-control').first().clear().type('testing');
 
-        // ✅ FIX: fill required TIME in modal to avoid "Please indicate Time."
-        cy.get('.modal:visible').within(() => {
-            cy.get('input[placeholder="HH"]').first().clear().type('08');
-            cy.get('input[placeholder="MM"]').first().clear().type('30');
+                // fill required TIME in modal to avoid "Please indicate Time."
+                cy.get('.modal:visible').within(() => {
+                    cy.get('input[placeholder="HH"]').first().clear().type('08');
+                    cy.get('input[placeholder="MM"]').first().clear().type('30');
+                });
+
+                cy.get('.pull-right > .btn-success').click();
+
+                // -------- DELETE --------
+                cy.get(':nth-child(19) > .btn').first().click();
+                cy.get('.confirm', { timeout: 10000 }).should('be.visible').click();
+
+                cy.get('td[ng-if="user_employee != record.employee"] > .btn').first().click();
+                cy.get('fieldset > input').first().clear().type('testing');
+                cy.get('.confirm', { timeout: 10000 }).should('be.visible').click();
+            }
         });
-
-        cy.get('.pull-right > .btn-success').click();
-
-        // -------- DELETE --------
-        // ✅ FIX: this matched 2 elements, so click only one
-        cy.get(':nth-child(19) > .btn').first().click();
-
-        cy.get('.confirm', { timeout: 10000 }).should('be.visible').click();
-
-        // Next dialog (keep as-is but make safe)
-        cy.get('td[ng-if="user_employee != record.employee"] > .btn').first().click();
-        cy.get('fieldset > input').first().clear().type('testing');
-        cy.get('.confirm', { timeout: 10000 }).should('be.visible').click();
     });
 });

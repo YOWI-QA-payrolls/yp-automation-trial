@@ -15,6 +15,7 @@ describe('Special Reports - Monthly Compensation Items Report', () => {
             .should('exist')
             .click();
 
+        cy.wait(1000);
         cy.select2First('.select2-choices');
 
         cy.get('tbody', { timeout: 30000 }).should('exist');

@@ -6,6 +6,7 @@ describe('Reports - Payroll Summary Matrix', () => {
 
     it('should select payroll and search matrix', () => {
         cy.navigateMenu(['#reports_list > [href="#"]', '#payroll_summary_matrix > a']);
+        cy.wait(1000);
         cy.select2First('.select2-choices');
         cy.get('#advance-search', { timeout: 15000 }).should('be.visible').click();
     });

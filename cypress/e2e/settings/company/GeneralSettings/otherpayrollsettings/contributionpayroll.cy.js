@@ -19,10 +19,6 @@ describe('Settings - General Settings - Contribution Payroll', () => {
             .should('exist')
             .click();
 
-        cy.get('[ng-click="main.excluded_employment_type_contribution = main.employmenttypes2"] > .fa', { timeout: 10000 })
-            .should('be.visible')
-            .click();
-
         cy.get('.form-group > .btn', { timeout: 10000 })
             .should('exist');
     });

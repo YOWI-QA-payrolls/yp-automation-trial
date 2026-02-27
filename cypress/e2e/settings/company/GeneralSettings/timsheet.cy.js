@@ -12,7 +12,7 @@ describe('Settings - General Settings - Timesheet Configuration', () => {
         ]);
 
         cy.waitForSettingsTable();
-        cy.clickSettingsRow('Timekeeping');
+        cy.clickSettingsRow('Timekeeper');
 
         cy.get('#schedule_in_timekeeper', { timeout: 10000 })
             .should('exist')

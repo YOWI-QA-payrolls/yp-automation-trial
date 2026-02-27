@@ -18,89 +18,89 @@ describe('Settings - General Settings - Auto Allowance Registration', () => {
         cy.get('[ng-repeat-start="(idx,record) in main.records2"]:first td .align_left a [ng-show="!static_key"] .btn', { timeout: 10000 })
             .should('be.visible')
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
 
         cy.get('[ng-repeat-end=""]:first .align_left .col-sm-12 .table-responsive #table tbody tr :nth-child(1) .input-group .input-group-btn .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.btn-info', { timeout: 10000 })
             .first()
             .click({ force: true });
 
         cy.get('[ng-repeat-end=""]:first .align_left .col-sm-12 .table-responsive #table tbody tr :nth-child(2) .input-group .input-group-btn .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.uib-datepicker-popup', { timeout: 10000 })
             .should('be.visible')
             .contains('15')
-            .click();
+            .click({ force: true });
 
         cy.get('[ng-repeat-end=""]:first .align_left .col-sm-12 .table-responsive #table tbody tr :nth-child(3) .input-group .input-group-btn .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.uib-datepicker-popup', { timeout: 10000 })
             .should('be.visible')
-            .contains('30')
-            .click();
+            .contains('28')
+            .click({ force: true });
 
         cy.get('[ng-repeat-end=""]:first .align_left .col-sm-12 .table-responsive #table tbody tr :nth-child(4) .input-group .input-group-btn .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.uib-datepicker-popup', { timeout: 10000 })
             .should('be.visible')
             .contains('15')
-            .click();
+            .click({ force: true });
 
         cy.get('[ng-repeat-end=""]:first .align_left .col-sm-12 .table-responsive #table tbody tr :nth-child(5) .input-group .input-group-btn .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.uib-datepicker-popup', { timeout: 10000 })
             .should('be.visible')
-            .contains('30')
-            .click();
+            .contains('28')
+            .click({ force: true });
 
         cy.get(':nth-child(4) > td > .align_left > a > [ng-show="!static_key"] > .btn', { timeout: 10000 })
             .should('be.visible')
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
 
         cy.get(':nth-child(5) > .align_left > .col-sm-12 > .table-responsive > #table > tbody > tr > :nth-child(1) > .input-group > .input-group-btn > .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.btn-info', { timeout: 10000 })
             .first()
             .click({ force: true });
 
         cy.get(':nth-child(5) > .align_left > .col-sm-12 > .table-responsive > #table > tbody > tr > :nth-child(2) > .input-group > .input-group-btn > .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.uib-datepicker-popup', { timeout: 10000 })
             .should('be.visible')
             .contains('15')
-            .click();
+            .click({ force: true });
 
         cy.get(':nth-child(5) > .align_left > .col-sm-12 > .table-responsive > #table > tbody > tr > :nth-child(3) > .input-group > .input-group-btn > .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.uib-datepicker-popup', { timeout: 10000 })
             .should('be.visible')
-            .contains('30')
-            .click();
+            .contains('28')
+            .click({ force: true });
 
         cy.get(':nth-child(5) > .align_left > .col-sm-12 > .table-responsive > #table > tbody > tr > :nth-child(4) > .input-group > .input-group-btn > .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.uib-datepicker-popup', { timeout: 10000 })
             .should('be.visible')
             .contains('15')
-            .click();
+            .click({ force: true });
 
         cy.get(':nth-child(5) > .align_left > .col-sm-12 > .table-responsive > #table > tbody > tr > :nth-child(5) > .input-group > .input-group-btn > .btn', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
         cy.get('.uib-datepicker-popup', { timeout: 10000 })
             .should('be.visible')
-            .contains('30')
-            .click();
+            .contains('28')
+            .click({ force: true });
     });
 });

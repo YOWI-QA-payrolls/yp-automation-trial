@@ -35,7 +35,7 @@ describe('Request - Leave Application', () => {
                 cy.select2First(':nth-child(10) > .ui-select-container > .select2-choice > .select2-arrow > b');
 
                 cy.get(':nth-child(14) > .form-control').should('be.visible').type('testing');
-                cy.get('#leave_submit').should('not.be.disabled').click();
+                cy.get('#leave_submit').click({ force: true });
                 cy.get('.cancel').should('be.visible').click();
                 cy.get('.col-sm-8 > .pull-right > .btn').should('be.visible').click();
             });

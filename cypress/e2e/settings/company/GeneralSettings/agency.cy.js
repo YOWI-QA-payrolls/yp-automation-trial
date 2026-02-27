@@ -16,9 +16,12 @@ describe('Settings - General Settings - Agency Configuration', () => {
 
         cy.get('#has_agency', { timeout: 10000 })
             .should('exist')
-            .click();
+            .check({ force: true });
 
-        cy.get('[ng-if="agency.has_agency"]:first .input-group .form-control', { timeout: 10000 })
+        cy.wait(1000);
+
+        cy.get('[ng-if="agency.has_agency"] .input-group .form-control', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .type('testname');
 
