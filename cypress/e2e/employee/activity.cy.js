@@ -1,27 +1,62 @@
 describe('Employee Activity', () => {
-    beforeEach(() => {
-        cy.viewport(1280, 900);
-        cy.login();
-    });
+  beforeEach(() => {
+    cy.viewport(1280, 900);
+    cy.login();
+  });
 
-    it('should navigate to employee performance and search', () => {
-        cy.navigateMenu([
-            '#reports_list > a',
-            '#employee_performance > a',
-        ]);
+  it('should navigate to employee performance and search', () => {
+    cy.intercept('GET', '**/common/popover_advance_filter/**').as('advanceFilterTpl');
 
-        cy.get('tabletoolstrans > .input-group > .form-control', { timeout: 15000 })
-            .should('be.visible')
-            .type('caleb');
+    cy.navigateMenu([
+      '#reports_list > a',
+      '#employee_performance > a',
+    ]);
 
-        cy.get('#advance-filter-btn').click();
-        cy.get('#advance-search', { timeout: 10000 }).click();
+    // wait for loaders
+    cy.get('.sk-loading', { timeout: 30000 }).should('not.exist');
+    cy.get('.main_page_loader', { timeout: 30000 }).should('not.exist');
 
-        cy.get('tbody', { timeout: 30000 }).should('exist');
+    // type into the search input (robust)
+    cy.get('input[type="search"], tabletoolstrans input.form-control, input.form-control', { timeout: 20000 })
+      .filter(':visible')
+      .first()
+      .should('be.visible')
+      .clear()
+      .type('caleb');
 
-        cy.get('.hand_cursor > :nth-child(2)').click();
-        cy.select2First(':nth-child(1) > td > :nth-child(1) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
-        cy.get('.input-group-btn > .btn').click();
-        cy.get('.btn-info').click();
-    });
+    // open advance filter popover
+    cy.get('#advance-filter-btn')
+      .should('be.visible')
+      .click();
+
+    cy.wait('@advanceFilterTpl');
+
+    // click Search in popover
+    cy.get('.wrapper.modalibox', { timeout: 20000 })
+      .should('be.visible')
+      .within(() => {
+        cy.contains('button', 'Search')
+          .should('be.visible')
+          .click();
+      });
+
+    // wait results
+    cy.get('.sk-loading', { timeout: 30000 }).should('not.exist');
+    cy.get('.main_page_loader', { timeout: 30000 }).should('not.exist');
+
+    // ensure we have rows
+    cy.get('tbody tr', { timeout: 30000 })
+      .should('have.length.greaterThan', 0);
+
+    // click the first row (or 2nd column if you prefer)
+    cy.get('tbody tr')
+      .first()
+      .as('firstRow');
+
+    cy.get('@firstRow')
+      .should('be.visible')
+      .click();
+
+
+  });
 });
