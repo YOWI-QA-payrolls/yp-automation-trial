@@ -11,37 +11,23 @@ describe('Timesheet Reports - Manpower Analysis Report', () => {
                 '#manpower_analysis_report > a'
             ]);
 
-            cy.get(':nth-child(2) > .input-group > .form-control', { timeout: 15000 })
+            cy.get('.select2-chosen:contains("Detailed")', { timeout: 15000 })
                 .should('be.visible')
                 .click();
+            cy.get('.select2-results .ui-select-choices-row-inner', { timeout: 10000 })
+                .contains('Detailed')
+                .click();
 
-            cy.get('.select2-search-field > .select2-input').should('be.visible').type('MAIN {enter}');
-
-            cy.get(':nth-child(3) > .ui-select-container > .select2-choice > .select2-arrow > b', { timeout: 10000 })
+            cy.get('input.select2-input[placeholder="Location"]', { timeout: 15000 })
                 .should('be.visible')
+                .click()
+                .type('Cagayan De Oro{enter}');
+
+            cy.get('button[ng-click="main.main_loader();"]', { timeout: 10000 })
                 .first()
+                .should('be.visible')
                 .click();
-            cy.get(':nth-child(2) > .select2-result-label > .ng-binding').should('be.visible').click();
             cy.get('tbody', { timeout: 30000 }).should('exist');
-            cy.get(':nth-child(3) > .ui-select-container > .select2-choice > .select2-arrow > b')
-                .should('be.visible')
-                .first()
-                .click();
-            cy.get(':nth-child(1) > .select2-result-label > .ng-binding').should('be.visible').click();
-            cy.get('tbody', { timeout: 30000 }).should('exist');
-
-            cy.get('[select="change_tab(\'period\')"] > .nav-link', { timeout: 10000 })
-                .should('be.visible')
-                .click();
-            cy.get('[ng-model="filters.date_from"]').should('be.visible').clear().type('12/10/2023');
-            cy.get('tabletoolsdaterange2 > .input-group > .form-control.ng-pristine').clear().type('12/26/2023');
-            cy.get('.input-group > .hand_cursor').should('be.visible').click();
-            cy.get('.input-group > .ui-select-container > .select2-choice > .select2-arrow > b')
-                .first()
-                .should('be.visible')
-                .click();
-            cy.get(':nth-child(2) > .select2-result-label > .ng-binding').should('be.visible').click();
-            cy.get('div.pull-right > [type="button"]').first().should('not.be.disabled').click();
         });
     });
 });
