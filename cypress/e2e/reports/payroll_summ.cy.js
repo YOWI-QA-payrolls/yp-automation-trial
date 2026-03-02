@@ -6,7 +6,7 @@ describe('Reports - Payroll Summary', () => {
 
     it('should view payroll summary report', () => {
         cy.navigateMenu(['#reports_list > [href="#"]', '#payroll_summary > a']);
-        cy.select2First('.select2-chosen.ng-binding');
-        cy.get('#advance-search').click();
+        cy.select2First('.select2-chosen');
+        cy.get('#advance-search').first().click();
     });
 });

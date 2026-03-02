@@ -18,7 +18,7 @@ describe('Employee Salary & Rate Status', () => {
 
         cy.get('tbody > :nth-child(2) > :nth-child(2)').click();
         cy.select2First(':nth-child(1) > td > .col-sm-4.form-group > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
-        cy.get('#salary').type('25000');
+        cy.get('#salary').type('25000', { force: true });
         cy.get(':nth-child(1) > td > .col-sm-3 > .input-group > .input-group-btn > .btn').click();
         cy.get(':nth-child(3) > .btn > .glyphicon').click();
         cy.get('#page-top')

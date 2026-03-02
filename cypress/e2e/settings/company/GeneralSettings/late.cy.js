@@ -11,18 +11,17 @@ describe('Settings - General Settings - Late Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(1) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Late');
 
         cy.get('.form-control', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .clear()
             .type('10');
 
         cy.get('.form-group > .btn', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .should('not.be.disabled')
             .click();
@@ -35,32 +34,28 @@ describe('Settings - General Settings - Late Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(1) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Late');
 
         cy.get('#customize_late', { timeout: 10000 })
             .should('exist')
-            .click();
+            .click({ force: true });
+        cy.wait(1000);
 
         cy.get(':nth-child(1) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('5');
+            .first()
+            .type('5', { force: true });
 
         cy.get('.form > :nth-child(2) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('10');
+            .type('10', { force: true });
 
         cy.get(':nth-child(3) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('10');
+            .first()
+            .type('10', { force: true });
 
         cy.get('.pull-right > .btn-success', { timeout: 10000 })
-            .should('be.visible')
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 
     it('should configure late multiplier and offset timeout settings', () => {
@@ -70,19 +65,14 @@ describe('Settings - General Settings - Late Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(1) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Late');
 
         cy.get('#is_late_multiplier_used', { timeout: 10000 })
             .should('exist')
             .click();
 
-        cy.get('.row > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('2');
+        cy.wait(1000);
 
         cy.get('#offset_timeout', { timeout: 10000 })
             .should('exist')

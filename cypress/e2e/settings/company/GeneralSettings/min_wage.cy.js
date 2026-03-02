@@ -11,11 +11,8 @@ describe('Settings - General Settings - Minimum Wage', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(16) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Minimum Wage');
 
         cy.get('.form-group > .btn', { timeout: 10000 })
             .should('be.visible')
@@ -27,6 +24,7 @@ describe('Settings - General Settings - Minimum Wage', () => {
             .click();
 
         cy.get('.input-group-btn > .btn', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .should('not.be.disabled')
             .click();

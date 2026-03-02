@@ -12,7 +12,7 @@ describe('Employee Deductions - Other', () => {
 
         cy.get('tbody', { timeout: 30000 }).should('exist');
 
-        cy.get('tbody tr:first .align_left .ng-binding').click();
+        cy.get('tbody tr:first > :nth-child(2)').click();
         cy.get('.col-sm-1 > .btn').click();
 
         cy.select2First('.align_left > .col-sm-3 > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');

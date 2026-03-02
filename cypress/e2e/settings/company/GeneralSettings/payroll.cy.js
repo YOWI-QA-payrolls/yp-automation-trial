@@ -11,11 +11,8 @@ describe('Settings - General Settings - Payroll Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(2) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Payroll');
 
         cy.get('#exclude_cola_overtime', { timeout: 10000 })
             .should('exist')
@@ -29,7 +26,7 @@ describe('Settings - General Settings - Payroll Configuration', () => {
             .should('exist')
             .click();
 
-        cy.select2First(':nth-child(18) > :nth-child(2) > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
+        cy.select2First(':nth-child(18) > :nth-child(2) > .ui-select-container > .select2-choice > .select2-chosen');
 
         cy.select2First(':nth-child(21) > :nth-child(2) > .ui-select-container > .select2-choice');
 

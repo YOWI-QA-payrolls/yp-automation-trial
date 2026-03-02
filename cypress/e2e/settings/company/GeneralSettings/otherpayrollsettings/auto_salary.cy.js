@@ -11,15 +11,9 @@ describe('Settings - General Settings - Auto Salary Increment', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(10) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
-
-        cy.get(':nth-child(7) > td', { timeout: 10000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Other Payroll Settings');
+        cy.clickSettingsRow('Salary');
 
         cy.get('#is_auto_salary_increment', { timeout: 10000 })
             .should('exist')

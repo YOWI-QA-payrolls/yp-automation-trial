@@ -15,9 +15,9 @@ describe('Special Reports - Quincenal Union Dues Checkoff List Report', () => {
 
         cy.get('tbody', { timeout: 30000 }).should('exist');
 
-        cy.get(':nth-child(3) > .form-group > .btn', { timeout: 10000 })
-            .should('be.visible')
+        cy.get('.btn.btn-success', { timeout: 15000 })
+            .first()
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 });

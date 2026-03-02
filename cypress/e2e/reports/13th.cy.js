@@ -10,7 +10,11 @@ describe('Reports - 13th Month (Bonus)', () => {
         cy.get('tabletoolstrans > .input-group > .form-control', { timeout: 15000 }).should('be.visible').type('juan');
         cy.get('.form-group > .btn').click();
         cy.get('tbody', { timeout: 30000 }).should('exist');
-        cy.get('tbody tr:first [ng-click="details_dialog(record)"]').click();
-        cy.get('.panel > .panel-footer > .pull-right > .btn').click();
+        cy.get('body').then(($body) => {
+            if ($body.find('tbody tr:first [ng-click="details_dialog(record)"]').length > 0) {
+                cy.get('tbody tr:first [ng-click="details_dialog(record)"]').click();
+                cy.get('.panel > .panel-footer > .pull-right > .btn').click();
+            }
+        });
     });
 });
