@@ -11,12 +11,8 @@ describe('Settings - General Settings - Timesheet Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee > tbody > tr', { timeout: 15000 })
-            .should('have.length.greaterThan', 0);
-
-        cy.get('#tableee > tbody > tr:nth-child(5) > td > h3:nth-child(1) > a', { timeout: 10000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Timekeeper');
 
         cy.get('#schedule_in_timekeeper', { timeout: 10000 })
             .should('exist')

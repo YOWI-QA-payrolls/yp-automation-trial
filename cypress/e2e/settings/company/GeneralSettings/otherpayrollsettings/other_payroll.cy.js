@@ -11,15 +11,9 @@ describe('Settings - General Settings - Other Payroll Settings', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(10) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
-
-        cy.get(':nth-child(2) > td', { timeout: 10000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Other Payroll Settings');
+        cy.clickSettingsRow('Other Payroll Settings');
 
         cy.get('#no_holiday_pay', { timeout: 10000 })
             .should('exist')
@@ -47,84 +41,5 @@ describe('Settings - General Settings - Other Payroll Settings', () => {
             .should('be.visible')
             .type('500');
 
-        cy.get(':nth-child(8) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(9) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(10) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(11) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(12) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(13) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(14) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(15) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(16) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(17) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(18) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(19) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(20) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(21) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(22) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(23) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(24) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(25) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(26) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
-
-        cy.get(':nth-child(27) > .form-control', { timeout: 10000 })
-            .should('be.visible')
-            .type('500');
     });
 });

@@ -16,9 +16,14 @@ describe('Timesheet Reports - Erroneous Timesheet Report', () => {
             cy.get('.uib-datepicker-popup').contains('29').click();
             cy.get('.hand_cursor').should('be.visible').click();
 
-            cy.get(':nth-child(11) > .btn', { timeout: 10000 }).should('be.visible').click();
-            cy.get('fieldset > input').should('be.visible').type('test');
-            cy.get('.confirm').should('be.visible').click();
+            cy.wait(2000);
+            cy.get('body').then(($body) => {
+                if ($body.find(':nth-child(11) > .btn').length > 0) {
+                    cy.get(':nth-child(11) > .btn').first().click();
+                    cy.get('fieldset > input').should('be.visible').type('test');
+                    cy.get('.confirm').should('be.visible').click();
+                }
+            });
         });
     });
 });

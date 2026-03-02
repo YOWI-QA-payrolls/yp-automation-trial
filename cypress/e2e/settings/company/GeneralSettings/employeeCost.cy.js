@@ -11,11 +11,8 @@ describe('Settings - General Settings - Employee Cost', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(6) > td > :nth-child(1) > a', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Employee Cost');
 
         cy.get('.form-group > .btn', { timeout: 10000 })
             .should('be.visible')

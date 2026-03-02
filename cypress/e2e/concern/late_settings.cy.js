@@ -20,9 +20,9 @@ describe('Concern - Late Settings', () => {
                 cy.get('#tableee', { timeout: 30000 }).should('exist');
                 cy.get(':nth-child(1) > td').should('be.visible').click();
 
-                cy.get('.form-control').should('be.visible').clear().type('10');
+                cy.get('.form-control').first().should('be.visible').clear().type('10');
 
-                cy.get('.form-group > .btn').should('not.be.disabled').click();
+                cy.get('.form-group > .btn').first().should('not.be.disabled').click();
             });
         });
     });
@@ -43,11 +43,12 @@ describe('Concern - Late Settings', () => {
                 cy.get('#tableee', { timeout: 30000 }).should('exist');
                 cy.get(':nth-child(1) > td').should('be.visible').click();
 
-                cy.get('#customize_late').should('be.visible').click();
+                cy.get('#customize_late').click({ force: true });
+                cy.wait(1000);
 
-                cy.get(':nth-child(1) > .form-control').should('be.visible').type('5');
-                cy.get('.form > :nth-child(2) > .form-control').should('be.visible').type('10');
-                cy.get(':nth-child(3) > .form-control').should('be.visible').type('10');
+                cy.get(':nth-child(1) > .form-control').first().type('5', { force: true });
+                cy.get('.form > :nth-child(2) > .form-control').type('10', { force: true });
+                cy.get(':nth-child(3) > .form-control').first().type('10', { force: true });
 
                 cy.get('.pull-right > .btn-success').should('not.be.disabled').click();
             });

@@ -11,15 +11,9 @@ describe('Settings - General Settings - Leave Settings', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(10) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
-
-        cy.get(':nth-child(4) > td', { timeout: 10000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Other Payroll Settings');
+        cy.clickSettingsRow('Leave');
 
         cy.get('#leave_credit_conversion', { timeout: 10000 })
             .should('exist')
@@ -42,6 +36,7 @@ describe('Settings - General Settings - Leave Settings', () => {
             .click();
 
         cy.get('.form-control', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .type('1');
 

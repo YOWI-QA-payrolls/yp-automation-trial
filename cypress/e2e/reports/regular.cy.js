@@ -6,6 +6,7 @@ describe('Reports - Regular Payroll Register', () => {
 
     it('should view regular payroll register', () => {
         cy.navigateMenu(['#reports_list > [href="#"]', '#payroll_register > a']);
-        cy.select2First('[ng-hide="$select.isEmpty()"]');
+        cy.get('[ng-hide="$select.isEmpty()"]').first().click({ force: true });
+        cy.get('.select2-results .select2-result-label', { timeout: 10000 }).first().click({ force: true });
     });
 });

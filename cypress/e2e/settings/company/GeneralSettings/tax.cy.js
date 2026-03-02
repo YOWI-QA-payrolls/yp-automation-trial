@@ -11,11 +11,8 @@ describe('Settings - General Settings - Tax Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(8) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Tax');
 
         cy.get('#activate_monthly_tax_calculation', { timeout: 10000 })
             .should('exist')

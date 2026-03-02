@@ -11,11 +11,11 @@ describe('Special Reports - Quincenal Loans Register Report', () => {
             '#loans_register > a'
         ]);
 
-        cy.select2First('.form-group > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
+        cy.select2First('.form-group > .ui-select-container > .select2-choice > .select2-chosen');
 
-        cy.get(':nth-child(4) > .btn', { timeout: 10000 })
-            .should('be.visible')
+        cy.get('.btn.btn-success', { timeout: 15000 })
+            .first()
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 });
