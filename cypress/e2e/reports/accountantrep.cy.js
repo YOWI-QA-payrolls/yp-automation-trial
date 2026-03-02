@@ -1,3 +1,5 @@
+// cypress/e2e/reports/accountantrep.cy.js
+
 describe('Reports - Accountant Reports', () => {
     beforeEach(() => {
         cy.viewport(1280, 900);
