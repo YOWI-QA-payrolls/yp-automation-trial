@@ -20,7 +20,7 @@ describe('Employee Profile', () => {
         // Wait for the modal/dialog to be visible before accessing fields
         cy.get('.modal, .modal-dialog', { timeout: 10000 }).should('be.visible');
         cy.get('#lastname', { timeout: 10000 }).should('be.visible').type('Lana');
-        cy.get('#firstname', { timeout: 10000 }).should('be.visible').type('Del Rey');
+        cy.get('#firstname', { timeout: 10000 }).scrollIntoView().should('be.visible').type('Del Rey');
         
     });
 });

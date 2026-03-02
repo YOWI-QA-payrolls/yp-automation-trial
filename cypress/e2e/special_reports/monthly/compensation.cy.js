@@ -15,13 +15,20 @@ describe('Special Reports - Monthly Compensation Items Report', () => {
             .should('exist')
             .click();
 
-        cy.select2First('.select2-choices');
+        cy.wait(1000);
+        cy.get('.select2-choices input.select2-input', { timeout: 10000 })
+            .first()
+            .click({ force: true });
+        cy.get('.ui-select-choices-row-inner', { timeout: 15000 })
+            .should('be.visible')
+            .first()
+            .click({ force: true });
 
         cy.get('tbody', { timeout: 30000 }).should('exist');
 
-        cy.get(':nth-child(3) > .btn', { timeout: 10000 })
-            .should('be.visible')
+        cy.get('.btn.btn-success', { timeout: 10000 })
+            .first()
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 });

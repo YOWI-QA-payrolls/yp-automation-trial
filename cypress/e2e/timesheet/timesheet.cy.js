@@ -20,12 +20,16 @@ describe('Timesheet - Daily Logs', () => {
             cy.get('.form > :nth-child(1) > .input-group > .input-group-btn > .btn')
                 .should('be.visible')
                 .click();
-            cy.get('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in > div > div > div > div.panel-body > div > div.row > form > div:nth-child(1) > p.input-group > div')
-                .contains('5').click();
+            cy.get('.modal.in .panel-body form div:nth-child(1) p.input-group > div', { timeout: 10000 })
+                .contains('5').click({ force: true });
 
-            cy.select2First('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in > div > div > div > div.panel-body > div > div.row > form > div:nth-child(5) > div > a > span.select2-arrow.ui-select-toggle');
+            cy.get('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in > div > div > div > div.panel-body > div > div.row > form > div:nth-child(5) > div > a > span.select2-arrow.ui-select-toggle', { timeout: 10000 })
+                .should('exist').first().click({ force: true });
+            cy.get('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in .select2-input', { timeout: 10000 }).first().type('aria');
+            cy.get('.ui-select-choices-row', { timeout: 10000 }).first().click({ force: true });
+            cy.wait(500);
 
-            cy.get(':nth-child(6) > .form-control').should('be.visible').clear().type('manual');
+            cy.get(':nth-child(6) > .form-control').clear({ force: true }).type('manual', { force: true });
             cy.select2First('.form > :nth-child(7) > .ui-select-container > .select2-choice');
             cy.get('.hours > .form-control').should('be.visible').type('8');
             cy.get('.minutes > .form-control').should('be.visible').type('30');

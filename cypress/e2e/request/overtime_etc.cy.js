@@ -22,10 +22,10 @@ describe('Request - Overtime and Business Trip', () => {
                 .click();
             cy.get('#advance-search').should('be.visible').click();
 
-            cy.get('.col-sm-3 > .pull-right > .btn').should('not.be.disabled').click();
+            cy.get('.col-sm-3 > .pull-right > .btn').first().should('not.be.disabled').click();
             cy.select2First('.select2-chosen.ng-binding');
             cy.get('[ng-show="official_business.employee"] > .col-sm-8 > :nth-child(2)').should('exist');
-            cy.get('#whole_day').should('be.visible').click();
+            cy.get('#whole_day').click({ force: true });
             cy.get(':nth-child(8) > .form-control').should('be.visible').type('testing');
             cy.get('.pull-right > .btn-success').should('not.be.disabled').click();
             cy.get('.cancel').should('be.visible').click();

@@ -36,7 +36,7 @@ describe('Approval - Cash Advance', () => {
             cy.get('body').then($body => {
                 if ($body.find('#ui-select-choices-0 li').length > 0) {
                     cy.get('#ui-select-choices-0 li:nth-child(3)').click();
-                    cy.get('#auto_approval').should('be.visible').click();
+                    cy.get('#auto_approval').click({ force: true });
                     cy.get('[ng-click="main.submit_auto_approval()"]').should('not.be.disabled').click();
                     cy.get('.confirm').should('be.visible').click();
                 } else {

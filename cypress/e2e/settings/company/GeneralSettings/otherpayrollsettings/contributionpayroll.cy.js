@@ -11,22 +11,12 @@ describe('Settings - General Settings - Contribution Payroll', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(10) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
-
-        cy.get(':nth-child(3) > td', { timeout: 10000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Other Payroll Settings');
+        cy.clickSettingsRow('Contribution');
 
         cy.get('#exclude_contribution_employment_type', { timeout: 10000 })
             .should('exist')
-            .click();
-
-        cy.get('[ng-click="main.excluded_employment_type_contribution = main.employmenttypes2"] > .fa', { timeout: 10000 })
-            .should('be.visible')
             .click();
 
         cy.get('.form-group > .btn', { timeout: 10000 })

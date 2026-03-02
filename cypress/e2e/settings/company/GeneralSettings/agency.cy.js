@@ -11,17 +11,17 @@ describe('Settings - General Settings - Agency Configuration', () => {
             '#companies_general_settings > a'
         ]);
 
-        cy.get('#tableee', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(7) > td', { timeout: 15000 })
-            .should('be.visible')
-            .click();
+        cy.waitForSettingsTable();
+        cy.clickSettingsRow('Agency');
 
         cy.get('#has_agency', { timeout: 10000 })
             .should('exist')
-            .click();
+            .check({ force: true });
 
-        cy.get('[ng-if="agency.has_agency"]:first .input-group .form-control', { timeout: 10000 })
+        cy.wait(1000);
+
+        cy.get('[ng-if="agency.has_agency"] .input-group .form-control', { timeout: 10000 })
+            .first()
             .should('be.visible')
             .type('testname');
 

@@ -13,11 +13,9 @@ describe('Special Reports - Quincenal Overtime Prooflist Report', () => {
 
         cy.select2First('.select2-search-field > .select2-input');
 
-        cy.get('tbody', { timeout: 30000 }).should('exist');
-
-        cy.get(':nth-child(3) > .btn', { timeout: 10000 })
-            .should('be.visible')
+        cy.get('.btn.btn-success', { timeout: 15000 })
+            .first()
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 });

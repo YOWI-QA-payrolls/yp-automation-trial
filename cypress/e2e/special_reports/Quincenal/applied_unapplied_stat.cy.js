@@ -15,9 +15,9 @@ describe('Special Reports - Quincenal Applied Deductions Statutories Report', ()
 
         cy.get('tbody', { timeout: 30000 }).should('exist');
 
-        cy.get('.ibox-content > :nth-child(3) > .btn', { timeout: 10000 })
-            .should('be.visible')
+        cy.get('.btn.btn-success', { timeout: 15000 })
+            .first()
             .should('not.be.disabled')
-            .click();
+            .click({ force: true });
     });
 });

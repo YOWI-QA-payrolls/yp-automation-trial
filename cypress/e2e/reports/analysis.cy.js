@@ -10,7 +10,7 @@ describe('Reports - Analysis', () => {
         cy.select2First(':nth-child(3) > .form-group > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
         cy.select2First(':nth-child(6) > .form-group > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
         cy.select2First(':nth-child(7) > .form-group > .ui-select-container > .select2-choice > .select2-chosen.ng-binding');
-        cy.get('.form-control').type('juan');
+        cy.get('.form-control').first().type('juan');
         cy.get('.form-group > .btn', { timeout: 15000 }).should('not.be.disabled').click();
     });
 });
