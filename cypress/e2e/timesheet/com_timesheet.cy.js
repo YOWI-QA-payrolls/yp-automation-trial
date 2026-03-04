@@ -18,7 +18,7 @@ describe('Timesheet - Complete Timesheet', () => {
                 .click();
             cy.get('.btn-group > .dropdown-menu > li > a').should('be.visible').click();
             cy.get('#by_date_range').click({ force: true });
-            cy.get(':nth-child(3) > .form-control').should('be.visible').type('manual');
+            cy.get(':nth-child(3) > .form-control').should('be.visible').should('not.be.disabled').type('manual');
             cy.get('[ng-click*="filter_employees2"] > .fa')
                 .should('be.visible')
                 .click();

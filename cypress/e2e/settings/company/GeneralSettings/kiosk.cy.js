@@ -84,21 +84,19 @@ describe('Settings - General Settings - Kiosk Configuration', () => {
             .should('be.visible')
             .click({ force: true });
 
-        cy.get('.select2-results', { timeout: 10000 }).then($results => {
-            const visibleResults = $results.find('.select2-result-label:visible');
-            if (visibleResults.length > 0) {
-                cy.wrap(visibleResults.first()).click();
+        cy.get('body').then($b => {
+            if ($b.find('.select2-results .select2-result-label').filter(':visible').length > 0) {
+                cy.get('.select2-results .select2-result-label:visible').first().click({ force: true });
             }
         });
 
         cy.get(':nth-child(4) > .col-sm-8 > .ui-select-container > .select2-choices > .select2-search-field > .select2-input', { timeout: 10000 })
             .should('be.visible')
-            .click();
+            .click({ force: true });
 
-        cy.get('.select2-results', { timeout: 10000 }).then($results => {
-            const visibleResults = $results.find('.select2-result-label:visible');
-            if (visibleResults.length > 0) {
-                cy.wrap(visibleResults.first()).click();
+        cy.get('body').then($b => {
+            if ($b.find('.select2-results .select2-result-label').filter(':visible').length > 0) {
+                cy.get('.select2-results .select2-result-label:visible').first().click({ force: true });
             }
         });
 

@@ -7,7 +7,54 @@ Cypress.Commands.add('login', () => {
         cy.get('#email').type(email);
         cy.get('#password').type(pass);
         cy.get('#signin-button').click();
-        cy.get('#side-menu', { timeout: 20000 }).should('be.visible');
+        // Wait for side-menu to be in DOM (login redirect completed)
+        cy.get('#side-menu', { timeout: 20000 }).should('exist');
+        // Poll up to 4s for post-login modal, dismiss via Angular's $uibModalStack
+        cy.window().then((win) => {
+            return new Cypress.Promise((resolve) => {
+                let elapsed = 0;
+                const interval = setInterval(() => {
+                    const modal = win.document.querySelector('.modal.in');
+                    if (modal) {
+                        clearInterval(interval);
+                        try {
+                            const injector = win.angular.element(win.document.body).injector();
+                            const $uibModalStack = injector.get('$uibModalStack');
+                            const $rootScope = injector.get('$rootScope');
+                            $uibModalStack.dismissAll('login_cleanup');
+                            $rootScope.$apply();
+                        } catch (e) {
+                            // Fallback: native click on close button
+                            const closeBtn = modal.querySelector('button.close, .close');
+                            if (closeBtn) closeBtn.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+                        }
+                        setTimeout(resolve, 600);
+                    } else {
+                        elapsed += 300;
+                        if (elapsed >= 4000) {
+                            clearInterval(interval);
+                            resolve();
+                        }
+                    }
+                }, 300);
+            });
+        });
+        // Final guard: dismiss any modal that slipped through after the poll window
+        cy.get('body').then(($body) => {
+            if ($body.find('.modal.in').length > 0) {
+                cy.window().then((win) => {
+                    try {
+                        const injector = win.angular.element(win.document.body).injector();
+                        const $uibModalStack = injector.get('$uibModalStack');
+                        const $rootScope = injector.get('$rootScope');
+                        $uibModalStack.dismissAll('login_cleanup_final');
+                        $rootScope.$apply();
+                    } catch (e) {}
+                });
+                cy.wait(600);
+            }
+        });
+        cy.get('#side-menu', { timeout: 5000 }).should('be.visible');
     });
 });
 

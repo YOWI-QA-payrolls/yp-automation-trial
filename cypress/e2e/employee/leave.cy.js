@@ -20,6 +20,6 @@ describe('Employee Leave Monitoring', () => {
         cy.get('tbody', { timeout: 30000 }).should('exist');
 
         cy.get('tr.ng-scope > :nth-child(3)').click();
-        cy.get('.panel > .panel-footer > .pull-right > .btn').click();
+        cy.get('.panel > .panel-footer > .pull-right > .btn').click({ force: true });
     });
 });

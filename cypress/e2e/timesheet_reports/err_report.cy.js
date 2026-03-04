@@ -13,7 +13,7 @@ describe('Timesheet Reports - Erroneous Timesheet Report', () => {
 
             cy.get('[ng-click="main.open_date(\'filter_date_from\')"]', { timeout: 15000 }).should('be.visible').click();
             cy.get('.uib-datepicker-popup .uib-left').should('be.visible').click();
-            cy.get('.uib-datepicker-popup').contains('29').click();
+            cy.get('.uib-datepicker-popup').contains('10').click();
             cy.get('.hand_cursor').should('be.visible').click();
 
             cy.wait(2000);

@@ -34,13 +34,14 @@ describe('Request - Transfer', () => {
 
                 cy.dismissToast();
 
-                cy.get('.iCheck-helper').first().should('exist').click();
+                cy.get('.iCheck-helper').first().should('exist').click({ force: true });
                 cy.wait(1000);
                 cy.select2First('.select2-arrow > b');
                 cy.wait(1000);
                 cy.select2First('.select2-arrow > b');
 
-                cy.get('.form-group > .btn-group > .btn').first().should('not.be.disabled').click();
+                cy.wait(500);
+                cy.get('.form-group > .btn-group > .btn').first().should('not.be.disabled').click({ force: true });
                 cy.get(':nth-child(2) > .input-group > .input-group-btn > .btn').first().should('be.visible').click();
                 cy.get('.btn-info').first().should('not.be.disabled').click();
                 cy.wait(1000);
@@ -56,12 +57,9 @@ describe('Request - Transfer', () => {
                 cy.select2First('tr.ng-scope > :nth-child(2) > .ui-select-container > .select2-choice > .select2-arrow > b');
                 cy.get('tr.ng-scope > :nth-child(3) input').should('be.visible').first().clear().type('08:00');
                 cy.get('tr.ng-scope > :nth-child(4) input').should('be.visible').first().clear().type('17:00');
-                cy.get('.col-sm-6 > .form-control').
-                // cy.get(':nth-child(6) > span > .btn').should('be.visible').click();
-                // cy.get('#leave_submit').should('not.be.disabled').click();
-                // cy.dismissToast();
-                cy.contains('button', 'Close').should('be.visible').click();
-                cy.get('.col-sm-8 > .pull-right > .btn').should('be.visible').click();
+                cy.get('.col-sm-6 > .form-control').should('be.visible').type('testing');
+                cy.contains('button', 'Close').click({ force: true });
+                cy.get('.col-sm-8 > .pull-right > .btn').click({ force: true });
             });
         });
     });

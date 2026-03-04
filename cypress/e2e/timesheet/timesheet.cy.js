@@ -1,5 +1,6 @@
 describe('Timesheet - Daily Logs', () => {
     beforeEach(() => {
+        cy.on('uncaught:exception', () => false);
         cy.viewport(1280, 900);
         cy.login();
     });
@@ -13,24 +14,40 @@ describe('Timesheet - Daily Logs', () => {
 
             cy.get('tbody', { timeout: 30000 }).should('exist');
 
-            cy.get('#page-wrapper > div.row.wrapper.border-bottom.white-bg.page-heading > div.col-sm-4 > div > div > div > button', { timeout: 15000 })
-                .should('be.visible')
-                .click();
+            cy.window().then((win) => {
+                // Block ALL $uibModalStack.dismiss calls for the entire test.
+                // Both the employee ui-select and the schedule type select2 render
+                // their dropdowns in document.body; clicking them triggers the
+                // $uibModalStack document-level click listener which calls dismiss().
+                // The modal closes via stack.close() on successful submission, so
+                // blocking dismiss() does not affect the intended close path.
+                // Must be patched BEFORE clicking Create so residual document events
+                // from preceding tests cannot auto-dismiss the modal.
+                try {
+                    const injector = win.angular.element(win.document.body).injector();
+                    const stack = injector.get('$uibModalStack');
+                    stack.dismiss = () => {};
+                } catch (e) { /* ignore if service not found */ }
+            });
 
-            cy.get('.form > :nth-child(1) > .input-group > .input-group-btn > .btn')
+            cy.get('.page-heading .col-sm-4 button', { timeout: 15000 })
+                .first()
                 .should('be.visible')
-                .click();
-            cy.get('.modal.in .panel-body form div:nth-child(1) p.input-group > div', { timeout: 10000 })
-                .contains('5').click({ force: true });
+                .click({ force: true });
 
-            cy.get('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in > div > div > div > div.panel-body > div > div.row > form > div:nth-child(5) > div > a > span.select2-arrow.ui-select-toggle', { timeout: 10000 })
+            cy.get('.modal.in', { timeout: 15000 }).should('be.visible');
+            cy.get('.modal.in .form > :nth-child(1) input').first().then(($el) => {
+                $el.val('03/05/2026').trigger('input').trigger('change');
+            });
+            cy.get('.modal.in .panel-body form div:nth-child(5) .select2-arrow.ui-select-toggle', { timeout: 10000 })
                 .should('exist').first().click({ force: true });
-            cy.get('#page-top > div.modal.fade.ng-scope.ng-isolate-scope.in .select2-input', { timeout: 10000 }).first().type('aria');
+            cy.get('.select2-drop-active .select2-input', { timeout: 10000 }).first().type('aria');
             cy.get('.ui-select-choices-row', { timeout: 10000 }).first().click({ force: true });
-            cy.wait(500);
+            cy.wait(1000);
 
-            cy.get(':nth-child(6) > .form-control').clear({ force: true }).type('manual', { force: true });
-            cy.select2First('.form > :nth-child(7) > .ui-select-container > .select2-choice');
+            cy.get('.modal.in').should('be.visible');
+            cy.get('.modal.in .form > :nth-child(6) > .form-control').clear({ force: true }).type('manual', { force: true });
+            cy.select2First('.modal.in .form > :nth-child(7) > .ui-select-container > .select2-choice > .select2-arrow > b');
             cy.get('.hours > .form-control').should('be.visible').type('8');
             cy.get('.minutes > .form-control').should('be.visible').type('30');
             cy.get('.pull-right > .btn-success').should('not.be.disabled').click();

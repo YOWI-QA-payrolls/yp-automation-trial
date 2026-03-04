@@ -6,7 +6,8 @@ describe('Reports - Last Pay', () => {
 
     it('should view last pay report and confirm', () => {
         cy.navigateMenu(['#reports_list > [href="#"]']);
-        cy.get('#side-menu').contains('Last Pay').should('exist').click({ force: true });
+        cy.get('#side-menu').contains('a', 'Last Pay', { timeout: 10000 }).should('exist').click({ force: true });
+        cy.wait(2000);
         cy.select2First('.select2-choice');
         cy.get('tbody', { timeout: 30000 }).should('exist');
         cy.get('tr.ng-scope > :nth-child(2)').first().click();
